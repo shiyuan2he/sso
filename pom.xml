@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.hsy</groupId>
+    <artifactId>sso</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>sso.server</module>
+        <module>sso.common</module>
+    </modules>
+
+    <properties>
+        <version.servlet.api>3.1.0</version.servlet.api>
+        <version.hsy.java>1.0</version.hsy.java>
+        <version.hsy.sso>1.0</version.hsy.sso>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${version.servlet.api}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hsy.java</groupId>
+                <artifactId>java-base</artifactId>
+                <version>${version.hsy.java}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hsy</groupId>
+                <artifactId>sso.common</artifactId>
+                <version>${version.hsy.sso}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+</project>
