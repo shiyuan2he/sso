@@ -3,33 +3,26 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>sso.server</artifactId>
+        <artifactId>sso</artifactId>
         <groupId>com.hsy</groupId>
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>war</packaging>
 
-    <artifactId>sso.server.simple</artifactId>
-
+    <artifactId>sso.blog.demo</artifactId>
     <dependencies>
+        <dependency>
+            <groupId>com.hsy.java</groupId>
+            <artifactId>java-httpclient</artifactId>
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.hsy.java</groupId>
-            <artifactId>java-base</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.hsy</groupId>
-            <artifactId>sso.common</artifactId>
-        </dependency>
     </dependencies>
-
-
     <build>
-        <finalName>sso.server.simple</finalName>
+        <finalName>sso.blog.demo</finalName>
         <plugins>
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
@@ -37,14 +30,14 @@
                 <version>8.1.16.v20140903</version>
                 <configuration>
                     <stopKey>stop</stopKey>
-                    <stopPort>6080</stopPort>
+                    <stopPort>6082</stopPort>
                     <webAppConfig>
-                        <contextPath>/sso</contextPath>
+                        <contextPath>/blog</contextPath>
                     </webAppConfig>
                     <scanIntervalSeconds>4</scanIntervalSeconds>
                     <connectors>
                         <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                            <port>8080</port>
+                            <port>8082</port>
                             <maxIdleTime>60000</maxIdleTime>
                         </connector>
                     </connectors>
@@ -52,4 +45,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

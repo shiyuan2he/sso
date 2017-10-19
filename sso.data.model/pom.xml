@@ -9,16 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sso.common</artifactId>
+    <artifactId>sso.data.model</artifactId>
 
-    <build>
-        <finalName>sso.common</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>2.4</version>
-            </plugin>
-        </plugins>
-    </build>
+
 </project>

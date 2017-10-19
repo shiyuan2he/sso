@@ -11,6 +11,9 @@
     <modules>
         <module>sso.server</module>
         <module>sso.common</module>
+        <module>sso.blog.demo</module>
+        <module>sso.cms.demo</module>
+        <module>sso.data.model</module>
     </modules>
 
     <properties>
@@ -31,11 +34,20 @@
                 <version>${version.hsy.java}</version>
             </dependency>
             <dependency>
+                <groupId>com.hsy.java</groupId>
+                <artifactId>java-util</artifactId>
+                <version>${version.hsy.java}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.hsy</groupId>
                 <artifactId>sso.common</artifactId>
                 <version>${version.hsy.sso}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.hsy.java</groupId>
+                <artifactId>java-httpclient</artifactId>
+                <version>${version.hsy.java}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

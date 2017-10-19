@@ -1,5 +1,6 @@
 package com.hsy.sso.server.simple.filter;
 
+import com.hsy.sso.common.cache.JVMCache;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.*;
@@ -29,21 +30,40 @@ public class SSOServerFilter implements Filter{
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String ticket = request.getParameter("ticket") ;
-        String requestUrl = request.getParameter("requestUrl") ;
-        Cookie[] cookies = request.getCookies() ;
-        String username = "" ;
-        for(Cookie cookie : cookies){
-            if(StringUtils.isNotBlank(cookie.getName())&&StringUtils.equals("sso",cookie.getName())){
-                username = cookie.getValue() ;
-                break ;
+        String serviceUrl = request.getParameter("serviceUrl");
+        String ticket = request.getParameter("ticket");
+        Cookie[] cookies = request.getCookies();
+        String username = "";
+        if (null != cookies) {
+            for (Cookie cookie : cookies) {
+                if ("sso".equals(cookie.getName())) {
+                    username = cookie.getValue();
+                    break;
+                }
             }
         }
-        if(null == requestUrl && null != ticket){
-            filterChain.doFilter(servletRequest,servletResponse);
-            return ;
+
+        if (null == serviceUrl && null != ticket) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
         }
 
+        if (null != username && !"".equals(username)) {
+            long time = System.currentTimeMillis();
+            String tokenId = username + time;
+            JVMCache.TICKET_AND_NAME.put(tokenId, username);
+            StringBuilder url = new StringBuilder();
+            url.append(serviceUrl);
+            if (0 <= serviceUrl.indexOf("?")) {
+                url.append("&");
+            } else {
+                url.append("?");
+            }
+            url.append("ticket=").append(tokenId);
+            response.sendRedirect(url.toString());
+        } else {
+            filterChain.doFilter(servletRequest, servletResponse);
+        }
     }
 
     @Override

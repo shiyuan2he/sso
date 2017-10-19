@@ -1,7 +1,8 @@
-package com.hsy.sso.server.simple.servlet;
+package com.hsy.sso.cms.servlet;
 
-import com.hsy.sso.common.cache.JVMCache;
+import com.hsy.java.httpclient.utils.HttpClientUtils;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -12,23 +13,26 @@ import java.io.IOException;
 /**
  * @author heshiyuan
  * @description <p></p>
- * @path sso/com.hsy.sso.server.simple.servlet
- * @date 18/10/2017 5:11 PM
+ * @path sso/com.hsy.sso.blog.servlet
+ * @date 19/10/2017 9:48 AM
  * @github http://github.com/shiyuan2he
  * @email shiyuan4work@sina.com
  * Copyright (c) 2017 shiyuan4work@sina.com All rights reserved.
  * @price ¥5    微信：hewei1109
  */
-@WebServlet(urlPatterns = "/login",description = "sso登陆")
+@WebServlet(urlPatterns = "/login",description = "crm系统登陆")
 public class LoginServlet extends HttpServlet{
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        doPost(request,response);
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        this.doPost(request, response);
     }
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String serviceUrl = request.getParameter("serviceUrl");
+
 
         if ("admin".equals(username) && "123".equals(password)) {
             Cookie cookie = new Cookie("sso", username);
@@ -38,7 +42,7 @@ public class LoginServlet extends HttpServlet{
             long time = System.currentTimeMillis();
             String timeString = username + time;
             // 此处username放到redis中
-            JVMCache.TICKET_AND_NAME.put(timeString, username);
+            //JVMCache.TICKET_AND_NAME.put(timeString, username);
 
             if (null != serviceUrl) {
                 StringBuilder url = new StringBuilder();
