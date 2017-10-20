@@ -1,4 +1,4 @@
-package com.hsy.sso.common.cache;
+package com.hsy.sso.base.common.cache;
 
 import java.util.HashMap;
 import java.util.Map;

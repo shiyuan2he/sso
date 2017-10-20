@@ -10,10 +10,12 @@
     <packaging>pom</packaging>
     <modules>
         <module>sso.server</module>
-        <module>sso.common</module>
         <module>sso.blog.demo</module>
         <module>sso.cms.demo</module>
         <module>sso.data.model</module>
+        <module>sso.base</module>
+        <module>sso.dao</module>
+        <module>sso.service</module>
     </modules>
 
     <properties>
@@ -40,13 +42,28 @@
             </dependency>
             <dependency>
                 <groupId>com.hsy</groupId>
-                <artifactId>sso.common</artifactId>
+                <artifactId>sso.base.common</artifactId>
+                <version>${version.hsy.sso}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hsy</groupId>
+                <artifactId>sso.dao.jdbc</artifactId>
                 <version>${version.hsy.sso}</version>
             </dependency>
             <dependency>
                 <groupId>com.hsy.java</groupId>
                 <artifactId>java-httpclient</artifactId>
                 <version>${version.hsy.java}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hsy</groupId>
+                <artifactId>sso.base.entity</artifactId>
+                <version>${version.hsy.sso}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hsy</groupId>
+                <artifactId>sso.service.jdbc</artifactId>
+                <version>${version.hsy.sso}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

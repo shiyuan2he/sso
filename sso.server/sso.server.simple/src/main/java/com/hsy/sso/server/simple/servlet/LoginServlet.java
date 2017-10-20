@@ -1,6 +1,8 @@
 package com.hsy.sso.server.simple.servlet;
 
-import com.hsy.sso.common.cache.JVMCache;
+import com.hsy.sso.base.common.cache.JVMCache;
+import com.hsy.sso.service.jdbc.ITSsoUserService;
+import com.hsy.sso.service.jdbc.impl.TSsoUserServiceImpl;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * @author heshiyuan
@@ -19,9 +22,10 @@ import java.io.IOException;
  * Copyright (c) 2017 shiyuan4work@sina.com All rights reserved.
  * @price ¥5    微信：hewei1109
  */
-@WebServlet(urlPatterns = "/login",description = "sso登陆")
+@WebServlet(urlPatterns = "/login.do",description = "sso登陆")
 public class LoginServlet extends HttpServlet{
 
+    ITSsoUserService itSsoUserService = new TSsoUserServiceImpl() ;
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         doPost(request,response);
     }
@@ -30,7 +34,7 @@ public class LoginServlet extends HttpServlet{
         String password = request.getParameter("password");
         String serviceUrl = request.getParameter("serviceUrl");
 
-        if ("admin".equals(username) && "123".equals(password)) {
+        if (itSsoUserService.login(username,password)) {
             Cookie cookie = new Cookie("sso", username);
             cookie.setPath("/");
             response.addCookie(cookie);

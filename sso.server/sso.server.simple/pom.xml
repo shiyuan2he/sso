@@ -23,7 +23,11 @@
         </dependency>
         <dependency>
             <groupId>com.hsy</groupId>
-            <artifactId>sso.common</artifactId>
+            <artifactId>sso.base.common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.hsy</groupId>
+            <artifactId>sso.service.jdbc</artifactId>
         </dependency>
     </dependencies>
 
