@@ -1,12 +1,9 @@
 package com.hsy.sso.server.simple.servlet;
 
-import com.hsy.sso.common.cache.JVMCache;
+import com.hsy.sso.base.common.cache.JVMCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +27,7 @@ public class TicketServlet extends HttpServlet{
         doPost(request,response);
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        _logger.info("【验票大厅】欢迎进入验票大厅");
         String ticket = request.getParameter("ticket");
         _logger.info("【验票大厅】验证通票{}是否有效",ticket);
         String username = JVMCache.TICKET_AND_NAME.get(ticket);

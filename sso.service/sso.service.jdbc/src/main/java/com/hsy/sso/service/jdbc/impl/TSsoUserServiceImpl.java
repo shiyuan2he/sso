@@ -32,7 +32,7 @@ public class TSsoUserServiceImpl implements ITSsoUserService{
             paramMap.put("password",password) ;
             List<Map<String,Object>> list = new ArrayList<>() ;
             list.add(paramMap) ;
-            String sql = "select * from t_sso_user ssouser " ;
+            String sql = "select * from t_sso_user " ;
             List<Map<String,Object>> returnList = baseDao.selectList(sql,list) ;
             if(returnList.size()==1){
                 return true ;
