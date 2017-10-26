@@ -13,12 +13,13 @@
     <packaging>pom</packaging>
     <modules>
         <module>sso.service.jdbc</module>
+        <module>sso.service.springboot</module>
     </modules>
 
     <dependencies>
         <dependency>
             <groupId>com.hsy</groupId>
-            <artifactId>sso.dao</artifactId>
+            <artifactId>sso.dao.jdbc</artifactId>
         </dependency>
     </dependencies>
 </project>

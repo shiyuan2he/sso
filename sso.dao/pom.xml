@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>sso.dao.jdbc</module>
+        <module>sso.dao.springboot</module>
     </modules>
 
 

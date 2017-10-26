@@ -8,18 +8,18 @@ package com.hsy.sso.base.entity.sso;
  * Copyright (c) 2016 shiyuan4work@sina.com All rights reserved
  */
 public class TSsoUser {
-    private String id;
+    private Long id;
     private String userCode;
     private String userName;
     private String password;
     private String passwordEncryptionType;
     private String mobile;
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
