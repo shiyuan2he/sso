@@ -16,6 +16,7 @@
         <module>sso.base</module>
         <module>sso.dao</module>
         <module>sso.service</module>
+        <module>sso.web</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -29,6 +30,7 @@
         <version.hsy.sso>1.0</version.hsy.sso>
         <version.springboot.mybatis>1.3.1</version.springboot.mybatis>
         <version.druid>1.1.4</version.druid>
+        <version.mariadb>2.1.2</version.mariadb>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -40,6 +42,11 @@
             <dependency>
                 <groupId>com.hsy.java</groupId>
                 <artifactId>java-base</artifactId>
+                <version>${version.hsy.java}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hsy.java</groupId>
+                <artifactId>java-bean</artifactId>
                 <version>${version.hsy.java}</version>
             </dependency>
             <dependency>
@@ -87,7 +94,41 @@
                 <artifactId>sso.service.springboot</artifactId>
                 <version>${version.hsy.sso}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.mariadb.jdbc</groupId>
+                <artifactId>mariadb-java-client</artifactId>
+                <version>${version.mariadb}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hsy.java</groupId>
+                <artifactId>java-enum</artifactId>
+                <version>${version.hsy.java}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hsy.java</groupId>
+                <artifactId>java-exception</artifactId>
+                <version>${version.hsy.java}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hsy</groupId>
+                <artifactId>sso.web.simple</artifactId>
+                <version>${version.hsy.sso}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hsy</groupId>
+                <artifactId>sso.service.common</artifactId>
+                <version>${version.hsy.sso}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hsy</groupId>
+                <artifactId>sso.base.bean</artifactId>
+                <version>${version.hsy.sso}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hsy</groupId>
+                <artifactId>sso.web.better</artifactId>
+                <version>${version.hsy.sso}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

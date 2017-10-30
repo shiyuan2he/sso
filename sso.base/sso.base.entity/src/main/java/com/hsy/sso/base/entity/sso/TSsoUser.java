@@ -1,4 +1,7 @@
 package com.hsy.sso.base.entity.sso;
+
+import java.util.Date;
+
 /**
  * @description <p>sso用户实体</p>
  * @author heshiyuan 
@@ -14,6 +17,10 @@ public class TSsoUser {
     private String password;
     private String passwordEncryptionType;
     private String mobile;
+    private Long inserter ;
+    private Date insertTime ;
+    private Long updator ;
+    private Date updateTime ;
 
     public void setId(Long id) {
         this.id = id;
@@ -27,7 +34,7 @@ public class TSsoUser {
         this.userCode = userCode;
     }
 
-    public String getUserCode() {
+    public String getUserCodeStirng() {
         return userCode;
     }
 
@@ -61,6 +68,58 @@ public class TSsoUser {
 
     public String getMobile() {
         return mobile;
+    }
+
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public Long getInserter() {
+        return inserter;
+    }
+
+    public void setInserter(Long inserter) {
+        this.inserter = inserter;
+    }
+
+    public Date getInsertTime() {
+        return insertTime;
+    }
+
+    public void setInsertTime(Date insertTime) {
+        this.insertTime = insertTime;
+    }
+
+    public Long getUpdator() {
+        return updator;
+    }
+
+    public void setUpdator(Long updator) {
+        this.updator = updator;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "TSsoUser{" +
+                "id=" + id +
+                ", userCode='" + userCode + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", passwordEncryptionType='" + passwordEncryptionType + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", inserter=" + inserter +
+                ", insertTime=" + insertTime +
+                ", updator=" + updator +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }
 

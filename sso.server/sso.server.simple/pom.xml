@@ -13,30 +13,14 @@
     <artifactId>sso.server.simple</artifactId>
 
     <dependencies>
-        <!-- springboot相关包 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.hsy.java</groupId>
-            <artifactId>java-base</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>com.hsy</groupId>
             <artifactId>sso.base.common</artifactId>
         </dependency>
         <dependency>
             <groupId>com.hsy</groupId>
-            <artifactId>sso.service.jdbc</artifactId>
+            <artifactId>sso.web.simple</artifactId>
         </dependency>
     </dependencies>
 

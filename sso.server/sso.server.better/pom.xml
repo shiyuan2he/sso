@@ -11,5 +11,10 @@
 
     <artifactId>sso.server.better</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.hsy</groupId>
+            <artifactId>sso.web.better</artifactId>
+        </dependency>
+    </dependencies>
 </project>

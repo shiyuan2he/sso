@@ -1,12 +1,16 @@
 package com.hsy.sso.blog.filter;
 
+import com.hsy.bean.vo.SessionBean;
+import com.hsy.java.base.string.StringHelper;
 import com.hsy.java.httpclient.utils.HttpClientUtils;
+import com.hsy.sso.base.common.enums.SsoEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.net.www.http.HttpClient;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,48 +31,57 @@ import java.util.Map;
  */
 @WebFilter("/*")
 public class SSOClientFilter implements Filter {
-    private Logger _logger = LoggerFactory.getLogger(this.getClass()) ;
+    private Logger _logger = LoggerFactory.getLogger(this.getClass());
+
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {}
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
-        _logger.info("【SSOClientFilter】进入到blog系统拦截器");
+        _logger.info("【blog系统检票处】进入到blog系统拦截器");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
-        String ticket = request.getParameter("ticket");
-        String url = URLEncoder.encode(request.getRequestURL().toString(), "UTF-8");
 
-        if (null == username) {//未登录
-            _logger.info("【SSOClientFilter】检测到用户未登录blog系统");
-            if (null != ticket && !"".equals(ticket)) {//获取通票
-                _logger.info("【SSOClientFilter-检票】监测到用户手中有通票");
-                Map<String,String> paramMap = new HashMap<>() ;
+        String ticket = "";
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            _logger.info("【blog系统检票处】获取到的cookie信息：name={},value={}", cookie.getName(), cookie.getValue());
+            if (SsoEnum.SSO_KEY_TICKET_COOKIE.getCode().equals(cookie.getName())) {
+                ticket = cookie.getValue();
+            }
+        }
+
+        //String url = URLEncoder.encode(request.getRequestURL().toString(), "UTF-8");
+        SessionBean sessionBean = (SessionBean) request.getSession().getAttribute(SsoEnum.SSO_KEY_USER_SESSION.getCode()) ;
+        if(null == sessionBean){
+            // 判断是否有通票
+            if (StringHelper.isNotNullOrEmpty(ticket)) {//获取通票
+                _logger.info("【SSOClientFilter-检票】监测到请求中有通票");
+                Map<String, String> paramMap = new HashMap<>();
                 // 用通票获取用户信息
-                paramMap.put("ticket", ticket) ;
                 _logger.info("【SSOClientFilter-验票】将用户手中通票跟sso服务器中的票进行验证。");
-                username = HttpClientUtils.sendHttpPost("http://localhost:8080/sso/ticket",paramMap) ;
-                if (null != username && !"".equals(username)) {
+                String sessionInfo = HttpClientUtils.sendHttpGet("http://localhost:8080/sso/ticket?ticket="+ticket);
+                if (sessionInfo.toLowerCase().contains("username")) {
                     _logger.info("【SSOClientFilter-验票】用户手中通票跟sso服务验票大厅中的票匹配，允许通过");
-                    session.setAttribute("username", username);
+                    request.getSession().setAttribute(SsoEnum.SSO_KEY_USER_SESSION.getCode(),sessionInfo);
                     filterChain.doFilter(request, response);
                 } else {
                     _logger.info("【SSOClientFilter-验票】用户手中通票跟sso服务验票大厅中的票不匹配，" +
                             "不允许通过，即将跳转到sso登陆页去购票");
-                    response.sendRedirect("http://localhost:8080/sso/login.jsp?serviceUrl=" + url);
+                    response.sendRedirect("/WEB-INF/jsp/login.jsp");
                 }
             } else {
                 _logger.info("【SSOClientFilter-检票】监测到用户手中没有通票。即将跳转到sso服务登陆页面去进行登陆，买票");
-                response.sendRedirect("http://localhost:8080/sso/login.jsp?serviceUrl=" + url);
+                response.sendRedirect("/WEB-INF/jsp/login.jsp") ;
             }
-        } else {
+        }else{
             filterChain.doFilter(request, response);
         }
     }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+    }
 }

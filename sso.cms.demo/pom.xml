@@ -18,6 +18,10 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.hsy</groupId>
+            <artifactId>sso.base.common</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <finalName>sso.cms.demo</finalName>
