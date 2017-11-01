@@ -15,13 +15,13 @@ import com.hsy.sso.base.entity.sso.TSsoUser;
 public interface ITSsoUserDao {
     /**
      * @description <p>根据用户名，密码查询用户信息</p>
-     * @param username 用户名
+     * @param mobile 手机号
      * @param password 用户密码
      * @return 用户信息对象
      * @author heshiyuan 
      * @date 2017/10/26 11:27 
      */
-    TSsoUser selectUser(String username,String password) ;
+    TSsoUser selectUser(Long mobile,String password) ;
     /**
      * @description <p></p>
      * @param user 用户信息

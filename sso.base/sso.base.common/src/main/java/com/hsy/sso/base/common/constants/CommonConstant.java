@@ -11,5 +11,5 @@ package com.hsy.sso.base.common.constants;
  * @price ¥5    微信：hewei1109
  */
 public class CommonConstant {
-
+    public static String TICKET_CACHE_KEY = "sso:service:better:" ;
 }

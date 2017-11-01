@@ -13,7 +13,8 @@
     <dependencies>
         <dependency>
             <groupId>com.hsy</groupId>
-            <artifactId>sso.service.common</artifactId>
+            <artifactId>sso.service.better</artifactId>
+            <version>1.0</version>
         </dependency>
 
     </dependencies>

@@ -28,7 +28,7 @@ import java.util.Calendar;
  * Copyright (c) 2017 shiyuan4work@sina.com All rights reserved.
  * @price ¥5    微信：hewei1109
  */
-@Service
+@Service("ssoUserService")
 public class TSsoUserServiceImpl implements ITSsoUserService{
     private Logger _logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
@@ -36,20 +36,20 @@ public class TSsoUserServiceImpl implements ITSsoUserService{
 
     @Transactional
     @Override
-    public SessionBean login(String username, String password){
+    public SessionBean login(Long mobile, String password){
         String ticket = "";
         try{
-            TSsoUser ssoUser = ssoUserDao.selectUser(username,password);
+            TSsoUser ssoUser = ssoUserDao.selectUser(mobile,password);
             if(null!=ssoUser){
                 // 也叫tokenId 生成一张通票，并将这张票保存在缓存当中
-                ticket = username + RandomHelper.IDGenerateValue(System.currentTimeMillis());
+                ticket = mobile + RandomHelper.IDGenerateValue(System.currentTimeMillis());
                 SessionBean sessionBean = new SessionBean() ;
-                sessionBean.setUserName(username);
+                sessionBean.setMobile(mobile);
                 sessionBean.setTicket(ticket);
-                _logger.info("【sso登陆-购票大厅】{}购票成功,通票是{}",username,ticket);
+                _logger.info("【sso登陆-购票大厅】{}购票成功,通票是{}",mobile,ticket);
                 // 此处username跟通票映射放进jvm缓存,过期时间30分钟
                 TicketCache.put(ticket,sessionBean,1000 * 60 * 30);
-                _logger.info("【sso登陆-购票大厅】将key={},value={}存在缓存当中",username);
+                _logger.info("【sso登陆-购票大厅】将key={},value={}存在缓存当中",mobile);
                 return sessionBean ;
             }
         }catch(Exception e){
@@ -63,11 +63,11 @@ public class TSsoUserServiceImpl implements ITSsoUserService{
     }
 
     @Override
-    public boolean reg(String username, String password) {
+    public boolean reg(Long mobile, String password) {
         TSsoUser ssoUser = new TSsoUser() ;
         String id = StringHelper.generateRandomOfStringByLength(19) ;
         ssoUser.setId(Long.parseLong(id));
-        ssoUser.setUserName(username);
+        ssoUser.setMobile(mobile);
         ssoUser.setPassword(Base64Helper.stringToBase64OfCc(password));
         ssoUser.setPasswordEncryptionType(ConstantEnum.ENCRYPTION_TYPE_BASE64.getCode());
         ssoUser.setInsertTime(Calendar.getInstance().getTime());

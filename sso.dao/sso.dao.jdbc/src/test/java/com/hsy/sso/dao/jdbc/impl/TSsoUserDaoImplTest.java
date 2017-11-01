@@ -31,8 +31,6 @@ public class TSsoUserDaoImplTest {
     public void insertUser() throws Exception {
         TSsoUser user = new TSsoUser() ;
         user.setId(24234234124443l);
-        user.setInserter(24234234124443l);
-        user.setInsertTime(Calendar.getInstance().getTime());
         user.setUserName("aa1234");
         user.setPassword("123456");
         user.setPasswordEncryptionType("BASE64");
@@ -42,7 +40,7 @@ public class TSsoUserDaoImplTest {
 
     @Test
     public void selectUser() throws Exception {
-        _logger.info("selectUser={}",ssoUserDao.selectUser("aa1234","123456").toString()) ;
+        _logger.info("selectUser={}",ssoUserDao.selectUser(11111111l,"123456").toString()) ;
     }
 
 }

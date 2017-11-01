@@ -17,6 +17,7 @@
         <module>sso.dao</module>
         <module>sso.service</module>
         <module>sso.web</module>
+        <module>sso.strong</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

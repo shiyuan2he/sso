@@ -1,7 +1,4 @@
 package com.hsy.sso.base.entity.sso;
-
-import java.util.Date;
-
 /**
  * @description <p>sso用户实体</p>
  * @author heshiyuan 
@@ -16,11 +13,7 @@ public class TSsoUser {
     private String userName;
     private String password;
     private String passwordEncryptionType;
-    private String mobile;
-    private Long inserter ;
-    private Date insertTime ;
-    private Long updator ;
-    private Date updateTime ;
+    private Long mobile;
 
     public void setId(Long id) {
         this.id = id;
@@ -62,11 +55,11 @@ public class TSsoUser {
         return passwordEncryptionType;
     }
 
-    public void setMobile(String mobile) {
+    public void setMobile(Long mobile) {
         this.mobile = mobile;
     }
 
-    public String getMobile() {
+    public Long getMobile() {
         return mobile;
     }
 
@@ -74,37 +67,6 @@ public class TSsoUser {
         return userCode;
     }
 
-    public Long getInserter() {
-        return inserter;
-    }
-
-    public void setInserter(Long inserter) {
-        this.inserter = inserter;
-    }
-
-    public Date getInsertTime() {
-        return insertTime;
-    }
-
-    public void setInsertTime(Date insertTime) {
-        this.insertTime = insertTime;
-    }
-
-    public Long getUpdator() {
-        return updator;
-    }
-
-    public void setUpdator(Long updator) {
-        this.updator = updator;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 
     @Override
     public String toString() {
@@ -115,10 +77,6 @@ public class TSsoUser {
                 ", password='" + password + '\'' +
                 ", passwordEncryptionType='" + passwordEncryptionType + '\'' +
                 ", mobile='" + mobile + '\'' +
-                ", inserter=" + inserter +
-                ", insertTime=" + insertTime +
-                ", updator=" + updator +
-                ", updateTime=" + updateTime +
                 '}';
     }
 }

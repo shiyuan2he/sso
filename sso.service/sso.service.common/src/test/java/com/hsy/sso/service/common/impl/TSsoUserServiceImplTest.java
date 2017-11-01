@@ -28,12 +28,12 @@ public class TSsoUserServiceImplTest {
 
     @Test
     public void login() throws Exception {
-        _logger.info("login={}",itSsoUserService.login("aa1234","123456"));
+        _logger.info("login={}",itSsoUserService.login(11111l,"123456"));
     }
 
     @Test
     public void reg() throws Exception {
-        _logger.info("reg={}",itSsoUserService.reg("admin","123456"));
+        _logger.info("reg={}",itSsoUserService.reg(11111l,"123456"));
     }
 
 }

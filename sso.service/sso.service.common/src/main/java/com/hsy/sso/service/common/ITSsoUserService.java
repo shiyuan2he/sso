@@ -14,20 +14,20 @@ import com.hsy.bean.vo.SessionBean;
 public interface ITSsoUserService {
     /**
      * @description <p>登陆</p>
-     * @param username 用户名
+     * @param mobile 手机号
      * @param password 用户密码
      * @return 是否登陆成功
      * @author heshiyuan
      * @date 20/10/2017 1:19 PM
      */
-    SessionBean login(String username, String password);
+    SessionBean login(Long mobile, String password);
     /**
      * @description <p>注册</p>
-     * @param username 用户名
+     * @param mobile 手机号
      * @param password 用户密码
      * @return 是否注册成功
      * @author heshiyuan 
      * @date 2017/10/27 09:49
      */
-    boolean reg(String username,String password) ;
+    boolean reg(Long mobile,String password) ;
 }

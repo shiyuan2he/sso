@@ -1,6 +1,6 @@
 package com.hsy.sso.dao.jdbc.impl;
 import com.hsy.java.enums.DBEnum;
-import com.hsy.java.exception.dao.DBExecuteException;
+import com.hsy.java.exception.dao.DBHandleException;
 import com.hsy.sso.base.entity.sso.TSsoUser;
 import com.hsy.sso.dao.jdbc.ITSsoUserDao;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -23,10 +23,10 @@ public class TSsoUserDaoImpl extends BaseDaoImpl implements ITSsoUserDao{
 
 
     @Override
-    public TSsoUser selectUser(String username, String password) {
-        List<TSsoUser> userList = this.jdbcTemplate.query("select * from t_sso_user where user_name = ? and password = ?",
-            new Object[]{username,password},new BeanPropertyRowMapper(TSsoUser.class));
-        if(null==userList||userList.size()<0) throw new DBExecuteException(DBEnum.DB_SELECT_IS_NULL);
+    public TSsoUser selectUser(Long mobile, String password) {
+        List<TSsoUser> userList = this.jdbcTemplate.query("select * from t_sso_user where mobile = ? and password = ?",
+            new Object[]{mobile,password},new BeanPropertyRowMapper(TSsoUser.class));
+        if(null==userList||userList.size()<0) throw new DBHandleException(DBEnum.DB_SELECT_IS_NULL);
         return userList.get(0) ;
     }
 
@@ -34,11 +34,11 @@ public class TSsoUserDaoImpl extends BaseDaoImpl implements ITSsoUserDao{
     public int insertUser(TSsoUser user) {
         int insertCount = 0 ;
         try{
-            insertCount = this.jdbcTemplate.update("insert ignore into t_sso_user(id,user_name,password,password_encryption_type) " +
+            insertCount = this.jdbcTemplate.update("insert ignore into t_sso_user(id,mobile,password,password_encryption_type) " +
                             "values(?,?,?,?)",
-                    new Object[]{user.getId(),user.getUserName(),user.getPassword(),user.getPasswordEncryptionType()});
+                    new Object[]{user.getId(),user.getMobile(),user.getPassword(),user.getPasswordEncryptionType()});
         }catch (Exception e){
-            throw new DBExecuteException(DBEnum.DB_INSERT_RESULT_ERROR) ;
+            throw new DBHandleException(DBEnum.DB_INSERT_RESULT_ERROR) ;
         }
         return insertCount ;
     }

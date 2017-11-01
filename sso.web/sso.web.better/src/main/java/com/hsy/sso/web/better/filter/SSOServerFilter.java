@@ -1,7 +1,10 @@
 package com.hsy.sso.web.better.filter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,48 +21,16 @@ import java.io.IOException;
  */
 @WebFilter("/*")
 public class SSOServerFilter implements Filter{
-
+    private final Logger _logger = LoggerFactory.getLogger(this.getClass()) ;
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        _logger.info("【sso服务大厅】进入SSOServerFilter");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String serviceUrl = request.getParameter("serviceUrl");
-        String ticket = request.getParameter("ticket");
-        Cookie[] cookies = request.getCookies();
-        String username = "";
-        if (null != cookies) {
-            for (Cookie cookie : cookies) {
-                if ("sso".equals(cookie.getName())) {
-                    username = cookie.getValue();
-                    break;
-                }
-            }
-        }
-
-        if (null == serviceUrl && null != ticket) {
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
-        }
-
-        if (null != username && !"".equals(username)) {
-            long time = System.currentTimeMillis();
-            String tokenId = username + time;
-            //JVMCache.TICKET_AND_NAME.put(tokenId, username);
-            StringBuilder url = new StringBuilder();
-            url.append(serviceUrl);
-            if (0 <= serviceUrl.indexOf("?")) {
-                url.append("&");
-            } else {
-                url.append("?");
-            }
-            url.append("ticket=").append(tokenId);
-            response.sendRedirect(url.toString());
-        } else {
-            filterChain.doFilter(servletRequest, servletResponse);
-        }
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override
