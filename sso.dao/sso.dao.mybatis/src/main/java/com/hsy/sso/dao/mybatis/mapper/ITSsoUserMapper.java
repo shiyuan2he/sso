@@ -15,4 +15,6 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface ITSsoUserMapper {
     TSsoUser selectUser(@Param(value="mobile") Long mobile,@Param(value = "password") String password) ;
+
+    int insertUser(TSsoUser user) ;
 }

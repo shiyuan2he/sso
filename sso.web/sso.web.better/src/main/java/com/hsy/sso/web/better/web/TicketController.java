@@ -38,7 +38,11 @@ public class TicketController extends BaseController {
         _logger.info("【验票大厅】欢迎进入验票大厅");
         _logger.info("【验票大厅】验证通票{}是否有效",ticket);
         SessionBean sessionBean = (SessionBean) springRedisTemplateCache.getCache(CommonConstant.TICKET_CACHE_KEY+ticket,SessionBean.class);
-        _logger.info("【验票大厅】此通票{}的所有者{},通票有效",ticket,sessionBean.getUserName());
-        return success(sessionBean);
+        if(null!=sessionBean){
+            _logger.info("【验票大厅】此通票{}的所有者{},通票有效",ticket,sessionBean.getUserName());
+            return success(sessionBean);
+        }else{
+            return failure();
+        }
     }
 }

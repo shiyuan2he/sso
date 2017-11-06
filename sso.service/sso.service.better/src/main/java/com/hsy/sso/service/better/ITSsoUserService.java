@@ -31,4 +31,12 @@ public interface ITSsoUserService {
      * @date 2017/10/27 09:49
      */
     boolean reg(Long mobile, String password) ;
+    /**
+     * @description <p>退出</p>
+     * @param
+     * @return
+     * @author heshiyuan
+     * @date 2017/11/2 14:33
+     */
+    boolean logout(String ticket);
 }

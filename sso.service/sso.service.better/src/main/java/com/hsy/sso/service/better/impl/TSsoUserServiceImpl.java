@@ -1,7 +1,10 @@
 package com.hsy.sso.service.better.impl;
 import com.hsy.bean.vo.SessionBean;
+import com.hsy.java.base.string.StringHelper;
 import com.hsy.java.enums.BusinessEnum;
+import com.hsy.java.enums.ConstantEnum;
 import com.hsy.java.exception.service.BusinessException;
+import com.hsy.java.util.secure.Base64Helper;
 import com.hsy.sso.base.common.constants.CommonConstant;
 import com.hsy.sso.base.entity.sso.TSsoUser;
 import com.hsy.sso.dao.mybatis.mapper.ITSsoUserMapper;
@@ -12,6 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Calendar;
+
 /**
  * @author heshiyuan
  * @description <p>sso登陆业务处理</p>
@@ -60,17 +66,25 @@ public class TSsoUserServiceImpl implements ITSsoUserService {
     }
     @Override
     public boolean reg(Long mobile, String password) {
-        /*TSsoUser ssoUser = new TSsoUser() ;
+        TSsoUser ssoUser = new TSsoUser() ;
         String id = StringHelper.generateRandomOfStringByLength(19) ;
         ssoUser.setId(Long.parseLong(id));
         ssoUser.setMobile(mobile);
         ssoUser.setPassword(Base64Helper.stringToBase64OfCc(password));
         ssoUser.setPasswordEncryptionType(ConstantEnum.ENCRYPTION_TYPE_BASE64.getCode());
-        ssoUser.setInsertTime(Calendar.getInstance().getTime());
-        ssoUser.setInserter(Long.parseLong(id));
+        ssoUser.setUserName("sso"+System.currentTimeMillis());
         if(itSsoUserMapper.insertUser(ssoUser)==1){
             return true ;
-        }*/
+        }
+        return false;
+    }
+
+    @Override
+    public boolean logout(String ticket) {
+        if(StringHelper.isNotNullOrEmpty(ticket)){
+            springRedisTemplateCache.deleteCacheByKey(CommonConstant.TICKET_CACHE_KEY+ticket);
+            return true ;
+        }
         return false;
     }
 }

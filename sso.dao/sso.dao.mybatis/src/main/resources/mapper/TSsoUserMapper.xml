@@ -8,7 +8,13 @@
             mobile
         FROM sso.t_sso_user
         WHERE 1=1
-        AND mobile = #{mobile}
-        AND password = #{password}
+              AND mobile = #{mobile}
+              AND password = #{password}
     </select>
+    
+    <insert id="insertUser" parameterType="TSsoUser">
+        INSERT ignore INTO t_sso_user(id,user_name,password,
+              password_encryption_type,mobile)
+        VALUES (#{id},#{userName},#{password},#{passwordEncryptionType},#{mobile})
+    </insert>
 </mapper>

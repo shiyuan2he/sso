@@ -12,4 +12,5 @@ package com.hsy.sso.base.common.constants;
  */
 public class CommonConstant {
     public static String TICKET_CACHE_KEY = "sso:service:better:" ;
+    public static String IMAGE_CODE_CACHE_KEY = "sso:web:better:" ;
 }

@@ -45,7 +45,7 @@ public class LoginController extends BaseController {
         ParamValidation.notNullValid(mobile, password); // 参数非空校验
 
         SessionBean sessionBean = ssoUserService.login(mobile, password) ;
-        //将用户信息放进session中
+        //将用户信息放进session中,暂无用处
         request.getSession().setAttribute(SsoEnum.SSO_KEY_USER_SESSION.getCode(),sessionBean);
 
         if (null != sessionBean) {
@@ -53,7 +53,7 @@ public class LoginController extends BaseController {
             // 将通票放到顶层域中
             Cookie cookie = new Cookie(SsoEnum.SSO_KEY_TICKET_COOKIE.getCode(), sessionBean.getTicket());
             cookie.setPath("/");
-            cookie.setMaxAge(1000 * 60);
+            cookie.setMaxAge(120); // 两分钟
             response.addCookie(cookie);
 
             _logger.info("【sso登陆-购票大厅】方式登陆，购票成功");
@@ -61,6 +61,45 @@ public class LoginController extends BaseController {
         } else {
             _logger.info("【sso登陆-购票大厅】登陆失败，请重新登陆");
             return failure();
+        }
+    }
+    @RequestMapping(value = "/logout",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public ResponseBodyBean<Object> logout(HttpServletRequest request, HttpServletResponse response){
+        // 清除cookie
+        Cookie[] cookies = request.getCookies() ;
+        String ticket = "" ;
+        for(Cookie cookie : cookies){
+            if(SsoEnum.SSO_KEY_TICKET_COOKIE.getCode().equals(cookie.getName())){
+                ticket = cookie.getValue() ;
+                // 删除cookie
+                cookie = new Cookie(SsoEnum.SSO_KEY_TICKET_COOKIE.getCode(),null);
+                cookie.setPath("/");
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
+        }
+        // 清除session
+        if(null!=request.getSession().getAttribute(SsoEnum.SSO_KEY_USER_SESSION.getCode())){
+            request.getSession().setAttribute(SsoEnum.SSO_KEY_USER_SESSION.getCode(),null);
+        }
+
+        // 清除redis缓存
+        ssoUserService.logout(ticket);
+        return success() ;
+    }
+
+    @RequestMapping(value = "/reg",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public ResponseBodyBean<Object> reg(@RequestParam(value = "mobile") long mobile,
+                                        @RequestParam(value = "password") String password,
+                                        @RequestParam(value = "callback",required = false) String callback){
+
+        ParamValidation.notNullValid(mobile, password); // 参数非空校验
+        if(ssoUserService.reg(mobile,password)){
+            return success() ;
+        }else{
+            return failure() ;
         }
     }
 }
