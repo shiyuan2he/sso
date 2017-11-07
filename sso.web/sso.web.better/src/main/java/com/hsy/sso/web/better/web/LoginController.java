@@ -3,9 +3,12 @@ package com.hsy.sso.web.better.web;
 import com.hsy.bean.dto.ResponseBodyBean;
 import com.hsy.bean.vo.SessionBean;
 import com.hsy.bean.web.BaseController;
+import com.hsy.java.base.string.StringHelper;
 import com.hsy.java.enums.SsoEnum;
 import com.hsy.java.util.validation.ParamValidation;
+import com.hsy.sso.base.common.constants.CommonConstant;
 import com.hsy.sso.service.better.ITSsoUserService;
+import com.hsy.sso.service.better.cache.SpringRedisTemplateCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +35,25 @@ public class LoginController extends BaseController {
     private Logger _logger = LoggerFactory.getLogger(this.getClass()) ;
     @Autowired
     ITSsoUserService ssoUserService ;
+    @Autowired
+    SpringRedisTemplateCache springRedisTemplateCache ;
 
     @RequestMapping(value = "/login",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public ResponseBodyBean<Object> login(@RequestParam(value = "mobile") long mobile,
                                           @RequestParam(value = "password") String password,
+                                          @RequestParam(value = "codeImage") String codeImage,
                                           @RequestParam(value = "callback",required = false) String callback,
                                           HttpServletRequest request,
                                           HttpServletResponse response) {
         _logger.info("【sso登陆-购票大厅】进入sso购票大厅。。。");
 
-        ParamValidation.notNullValid(mobile, password); // 参数非空校验
+        ParamValidation.notNullValid(mobile, password,codeImage); // 参数非空校验
+        codeImage = codeImage.toUpperCase() ;
+        String redisImageCode = (String) springRedisTemplateCache.getCache(CommonConstant.IMAGE_CODE_CACHE_KEY+codeImage,String.class);
+        if(StringHelper.isNullOrEmpty(redisImageCode)){
+            return failure("SSO9999","验证码不正确,或者超时60秒");
+        }
 
         SessionBean sessionBean = ssoUserService.login(mobile, password) ;
         //将用户信息放进session中,暂无用处

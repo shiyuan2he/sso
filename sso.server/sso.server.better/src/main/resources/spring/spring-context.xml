@@ -29,6 +29,7 @@
     <import resource="spring-dao.xml"/>
     <import resource="spring-redis.xml"/>
     <import resource="spring-service.xml"/>
+    <import resource="spring-kaptcha.xml"/>
     <!--<import resource="spring-quartz.xml"/>-->
     <!--<import resource="spring-aop.xml"/>-->
     <!--<import resource="spring-thread.xml"/>-->

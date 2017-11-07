@@ -43,7 +43,7 @@ public class TSsoUserServiceImpl implements ITSsoUserService {
     public SessionBean login(Long mobile, String password){
         String ticket = "";
         try{
-            TSsoUser ssoUser = itSsoUserMapper.selectUser(mobile,password);
+            TSsoUser ssoUser = itSsoUserMapper.selectUser(mobile,Base64Helper.stringToBase64OfCc(password));
             if(null!=ssoUser){
                 // 也叫tokenId 生成一张通票，并将这张票保存在缓存当中
                 ticket = mobile + System.currentTimeMillis() + "";
@@ -51,7 +51,7 @@ public class TSsoUserServiceImpl implements ITSsoUserService {
                 sessionBean.setMobile(mobile);
                 sessionBean.setTicket(ticket);
                 _logger.info("【sso登陆-购票大厅】{}购票成功,通票是{}",mobile,ticket);
-                springRedisTemplateCache.putCacheWithExpireTime(CommonConstant.TICKET_CACHE_KEY+ticket,sessionBean,1000 * 60) ;
+                springRedisTemplateCache.putCacheWithExpireTime(CommonConstant.TICKET_CACHE_KEY+ticket,sessionBean,2 * 60) ;
                 _logger.info("【sso登陆-购票大厅】将key={},value={}存在缓存当中",mobile);
                 return sessionBean ;
             }
