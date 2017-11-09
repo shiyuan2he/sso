@@ -14,5 +14,6 @@
         <module>sso-dao-jdbc</module>
         <module>sso-dao-jpa</module>
         <module>sso-dao-mybatis</module>
+        <module>sso-dao-redis</module>
     </modules>
 </project>

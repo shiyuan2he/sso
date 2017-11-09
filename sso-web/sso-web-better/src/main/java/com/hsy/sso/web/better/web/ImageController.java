@@ -4,7 +4,7 @@ import com.google.code.kaptcha.Producer;
 import com.hsy.bean.web.BaseController;
 import com.hsy.java.base.utils.VerificationCodeHelper;
 import com.hsy.sso.base.common.constants.CommonConstant;
-import com.hsy.sso.service.common.cache.SpringRedisTemplateCacheImpl;
+import com.hsy.sso.dao.redis.cache.SpringRedisTemplateCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class ImageController extends BaseController {
     private Logger _logger = LoggerFactory.getLogger(this.getClass()) ;
 
     @Autowired
-    SpringRedisTemplateCacheImpl springRedisTemplateCache ;
+    SpringRedisTemplateCache springRedisTemplateCache ;
 
     @RequestMapping(value = "/code",method = RequestMethod.GET)
     public void getCode(HttpServletResponse response) throws IOException {

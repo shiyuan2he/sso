@@ -7,8 +7,8 @@ import com.hsy.java.base.string.StringHelper;
 import com.hsy.java.enums.SsoEnum;
 import com.hsy.java.util.validation.ParamValidation;
 import com.hsy.sso.base.common.constants.CommonConstant;
+import com.hsy.sso.dao.redis.cache.SpringRedisTemplateCache;
 import com.hsy.sso.service.api.ITSsoUserService;
-import com.hsy.sso.service.common.cache.SpringRedisTemplateCacheImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class LoginController extends BaseController {
     @Autowired
     ITSsoUserService ssoUserService ;
     @Autowired
-    SpringRedisTemplateCacheImpl springRedisTemplateCache ;
+    SpringRedisTemplateCache springRedisTemplateCache ;
 
     @RequestMapping(value = "/login",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody

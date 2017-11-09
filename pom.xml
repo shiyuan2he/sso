@@ -160,7 +160,11 @@
                 <artifactId>jedis</artifactId>
                 <version>${version.jedis}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.hsy.sso</groupId>
+                <artifactId>sso-dao-redis</artifactId>
+                <version>${version.hsy.sso}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

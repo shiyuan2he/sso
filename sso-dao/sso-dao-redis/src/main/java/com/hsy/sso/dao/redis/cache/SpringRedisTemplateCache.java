@@ -1,4 +1,4 @@
-package com.hsy.sso.service.better.cache;
+package com.hsy.sso.dao.redis.cache;
 import com.hsy.java.util.cache.redis.impl.AbstractSpringRedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @price ¥5    微信：hewei1109
  */
 @Service("springRedisTemplateCache")
-public class SpringRedisTemplateCacheImpl extends AbstractSpringRedisCache {
+public class SpringRedisTemplateCache extends AbstractSpringRedisCache {
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired

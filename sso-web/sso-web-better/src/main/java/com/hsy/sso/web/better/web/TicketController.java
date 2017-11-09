@@ -4,7 +4,7 @@ import com.hsy.bean.dto.ResponseBodyBean;
 import com.hsy.bean.vo.SessionBean;
 import com.hsy.bean.web.BaseController;
 import com.hsy.sso.base.common.constants.CommonConstant;
-import com.hsy.sso.service.common.cache.SpringRedisTemplateCacheImpl;
+import com.hsy.sso.dao.redis.cache.SpringRedisTemplateCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class TicketController extends BaseController {
     private Logger _logger = LoggerFactory.getLogger(this.getClass()) ;
 
     @Autowired
-    SpringRedisTemplateCacheImpl springRedisTemplateCache ;
+    SpringRedisTemplateCache springRedisTemplateCache ;
     @RequestMapping(value = "/{ticket}",produces = "application/json;charset=UTF-8",method = RequestMethod.GET)
     @ResponseBody
     public ResponseBodyBean<Object> getTicket(@PathVariable(value = "ticket") long ticket) throws IOException {

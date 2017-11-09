@@ -3,37 +3,29 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>sso-service</artifactId>
+        <artifactId>sso-dao</artifactId>
         <groupId>com.hsy.sso</groupId>
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>sso-service-common</artifactId>
 
+    <artifactId>sso-dao-redis</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.hsy.sso</groupId>
-            <artifactId>sso-dao-redis</artifactId>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
         </dependency>
         <dependency>
             <groupId>com.hsy.java</groupId>
             <artifactId>java-util</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.hsy.sso</groupId>
-            <artifactId>sso-base-bean</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.hsy.java</groupId>
-            <artifactId>java-bean</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.hsy.sso</groupId>
-            <artifactId>sso-base-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.hsy.sso</groupId>
-            <artifactId>sso-dao-jdbc</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
         </dependency>
     </dependencies>
 </project>

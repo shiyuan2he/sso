@@ -8,8 +8,8 @@ import com.hsy.java.util.secure.Base64Helper;
 import com.hsy.sso.base.common.constants.CommonConstant;
 import com.hsy.sso.base.entity.sso.TSsoUser;
 import com.hsy.sso.dao.mybatis.mapper.ITSsoUserMapper;
+import com.hsy.sso.dao.redis.cache.SpringRedisTemplateCache;
 import com.hsy.sso.service.api.ITSsoUserService;
-import com.hsy.sso.service.better.cache.SpringRedisTemplateCacheImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class TSsoUserServiceImpl implements ITSsoUserService {
     @Autowired
     private ITSsoUserMapper itSsoUserMapper ;
     @Autowired
-    SpringRedisTemplateCacheImpl springRedisTemplateCache ;
+    SpringRedisTemplateCache springRedisTemplateCache ;
 
 
     @Override

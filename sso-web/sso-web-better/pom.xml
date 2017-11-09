@@ -12,7 +12,7 @@
     <dependencies>
         <dependency>
             <groupId>com.hsy.sso</groupId>
-            <artifactId>sso-service-api</artifactId>
+            <artifactId>sso-service-better</artifactId>
         </dependency>
         <dependency>
             <groupId>com.hsy.sso</groupId>
