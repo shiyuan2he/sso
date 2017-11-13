@@ -7,20 +7,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>war</packaging>
-    <artifactId>sso-server-service-better</artifactId>
+    <artifactId>sso-server-dubbo</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.hsy.sso</groupId>
-            <artifactId>sso-service-better</artifactId>
+            <artifactId>sso-service-common</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.netty</groupId>
-            <artifactId>netty</artifactId>
-            <version>3.2.9.Final</version>
         </dependency>
     </dependencies>
 </project>

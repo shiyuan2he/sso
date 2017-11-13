@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/sso")
 public class LoginController extends BaseController {
     private Logger _logger = LoggerFactory.getLogger(this.getClass()) ;
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     ITSsoUserService ssoUserService ;
     @Autowired

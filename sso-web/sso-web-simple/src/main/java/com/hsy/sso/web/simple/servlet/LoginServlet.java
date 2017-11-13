@@ -1,7 +1,6 @@
 package com.hsy.sso.web.simple.servlet;
 import com.hsy.java.base.utils.RandomHelper;
 import com.hsy.java.enums.ConstantEnum;
-import com.hsy.sso.service.common.ITSsoUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

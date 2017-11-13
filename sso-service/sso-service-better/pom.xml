@@ -30,14 +30,6 @@
             <groupId>com.hsy.sso</groupId>
             <artifactId>sso-base-common</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.101tec</groupId>
-            <artifactId>zkclient</artifactId>
-            <version>0.8</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>dubbo</artifactId>
-        </dependency>
+
     </dependencies>
 </project>

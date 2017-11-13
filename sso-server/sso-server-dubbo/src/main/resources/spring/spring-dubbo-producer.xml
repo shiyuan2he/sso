@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	    http://www.springframework.org/schema/beans/spring-beans.xsd 
+	    http://code.alibabatech.com/schema/dubbo 
+	    http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.hsy.sso.service.common.impl"/>
+
+    <dubbo:application name="sso-service-better-dubbo-provider"/>
+    <dubbo:registry address="zookeeper://192.168.216.129:2818"/>
+    <dubbo:protocol name="dubbo" port="20881"/>
+    <dubbo:monitor protocol="registry"/>
+
+    <!--使用 dubbo 协议实现定义好的 api.ITSsoUserService 接口-->
+    <dubbo:service interface="com.hsy.sso.service.api.ITSsoUserService" ref="ssoUserService" protocol="dubbo"/>
+</beans>

@@ -1,6 +1,6 @@
 package com.hsy.sso.service.common.impl;
 
-import com.hsy.sso.service.common.ITSsoUserService;
+import com.hsy.sso.service.api.ITSsoUserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -23,17 +23,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class TSsoUserServiceImplTest {
     private Logger _logger = LoggerFactory.getLogger(this.getClass()) ;
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
-    ITSsoUserService itSsoUserService ;
+    ITSsoUserService ssoUserService ;
 
     @Test
     public void login() throws Exception {
-        _logger.info("login={}",itSsoUserService.login(11111l,"123456"));
+        _logger.info("login={}",ssoUserService.login(11111l,"123456"));
     }
 
     @Test
     public void reg() throws Exception {
-        _logger.info("reg={}",itSsoUserService.reg(11111l,"123456"));
+        _logger.info("reg={}",ssoUserService.reg(11111l,"123456"));
     }
 
 }

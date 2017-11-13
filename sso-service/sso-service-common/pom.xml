@@ -13,6 +13,10 @@
     <dependencies>
         <dependency>
             <groupId>com.hsy.sso</groupId>
+            <artifactId>sso-service-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.hsy.sso</groupId>
             <artifactId>sso-dao-redis</artifactId>
         </dependency>
         <dependency>
@@ -34,6 +38,18 @@
         <dependency>
             <groupId>com.hsy.sso</groupId>
             <artifactId>sso-dao-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.hsy.sso</groupId>
+            <artifactId>sso-dao-mybatis</artifactId>
         </dependency>
     </dependencies>
 </project>

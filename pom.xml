@@ -32,6 +32,8 @@
         <version.mariadb>2.1.2</version.mariadb>
         <version.dubbo>2.5.7</version.dubbo>
         <version.jedis>2.9.0</version.jedis>
+        <version.zkClient>0.8</version.zkClient>
+        <version.kaptcha>2.3.2</version.kaptcha>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -164,6 +166,16 @@
                 <groupId>com.hsy.sso</groupId>
                 <artifactId>sso-dao-redis</artifactId>
                 <version>${version.hsy.sso}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.101tec</groupId>
+                <artifactId>zkclient</artifactId>
+                <version>${version.zkClient}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.kaptcha</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${version.kaptcha}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
