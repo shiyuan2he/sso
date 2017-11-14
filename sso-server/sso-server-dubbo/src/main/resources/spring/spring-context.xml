@@ -8,6 +8,5 @@
     <import resource="spring-dao.xml"/>
     <import resource="spring-dubbo-producer.xml"/>
     <import resource="spring-redis.xml"/>
-    <import resource="spring-service-dubbo.xml"/>
     <!--<import resource="spring-tx.xml"/>-->
 </beans>

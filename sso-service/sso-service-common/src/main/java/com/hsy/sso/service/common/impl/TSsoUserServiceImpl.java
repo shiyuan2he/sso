@@ -30,7 +30,6 @@ import java.util.Calendar;
 @Service("ssoUserService")
 public class TSsoUserServiceImpl implements ITSsoUserService {
     private Logger _logger = LoggerFactory.getLogger(this.getClass());
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private ITSsoUserMapper itSsoUserMapper ;
     @Autowired

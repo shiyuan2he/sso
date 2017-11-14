@@ -8,6 +8,12 @@
     <artifactId>sso</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
+    <developers>
+        <developer>
+            <name>heshiyuan</name>
+            <email>shiyuan4work@sina.com</email>
+        </developer>
+    </developers>
     <modules>
         <module>sso-data-model</module>
         <module>sso-base</module>
@@ -179,5 +185,26 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
+    <build>
+        <plugins>
+            <!-- java编译插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

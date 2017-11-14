@@ -6,7 +6,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	    http://www.springframework.org/schema/beans/spring-beans.xsd 
 	    http://code.alibabatech.com/schema/dubbo 
-	    http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	    http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+	    http://www.springframework.org/schema/context
+	    http://www.springframework.org/schema/context/spring-context.xsd
+    ">
 
     <context:component-scan base-package="com.hsy.sso.service.common.impl"/>
 
@@ -17,4 +20,5 @@
 
     <!--使用 dubbo 协议实现定义好的 api.ITSsoUserService 接口-->
     <dubbo:service interface="com.hsy.sso.service.api.ITSsoUserService" ref="ssoUserService" protocol="dubbo"/>
+    <dubbo:service interface="com.hsy.sso.service.api.ITSsoPermissionService" ref="ssoPermissionService" protocol="dubbo"/>
 </beans>

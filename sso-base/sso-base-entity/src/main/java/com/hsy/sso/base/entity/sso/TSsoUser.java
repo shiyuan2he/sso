@@ -1,9 +1,10 @@
 package com.hsy.sso.base.entity.sso;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
-public class TSsoUser {
+public class TSsoUser implements Serializable{
 	private Long id;
 	private String userCode;
 	private String userName;

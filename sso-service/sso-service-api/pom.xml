@@ -16,5 +16,9 @@
             <groupId>com.hsy.java</groupId>
             <artifactId>java-bean</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.hsy.sso</groupId>
+            <artifactId>sso-base-entity</artifactId>
+        </dependency>
     </dependencies>
 </project>

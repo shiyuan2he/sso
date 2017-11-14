@@ -1,0 +1,32 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hsy.sso.dao.mybatis.mapper.ITSsoPermissionMapper">
+    <sql id="selectPermissionField">
+        ${permission}.id as id,
+        ${permission}.auth_address as authAddress,
+        ${permission}.auth_description as authDescription,
+        ${permission}.parent_id as parentId
+    </sql>
+    <select id="getAll" resultType="TSsoPermission">
+        select
+          <include refid="selectPermissionField"><property name="permission" value="aa"/></include>
+        from  t_sso_permission aa
+        where 1 = 1
+    </select>
+
+    <select id="getAllOfUser" resultType="TSsoPermission">
+        select
+          <include refid="selectPermissionField"><property name="permission" value="permission"/></include>
+        from t_sso_user_role ur
+        LEFT JOIN t_sso_user user on ur.user_id = user.id
+        left join t_sso_role role on ur.role_id = role.id
+        left join t_sso_role_permission rp on rp.role_id = role.id
+        left join t_sso_permission permission on permission.id = rp.permission_id
+        where 1 = 1
+        <if test="userId != null">
+            AND  user.id = #{userId};
+        </if>
+    </select>
+</mapper>
