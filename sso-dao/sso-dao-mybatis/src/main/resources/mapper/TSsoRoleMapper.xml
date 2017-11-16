@@ -1,0 +1,39 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hsy.sso.dao.mybatis.mapper.ITSsoRoleMapper">
+
+    <insert id="insertUser" parameterType="TSsoRole">
+        INSERT ignore INTO t_sso_user(
+            <include refid="roleField"></include>
+        )
+        VALUES (#{rolename},#{roleDescription},#{creater},#{createTime},null,NULL)
+    </insert>
+
+    <select id="getAll" resultType="TSsoRole">
+        SELECT
+          <include refid="selectRoleField"></include>
+        FROM t_sso_role
+        WHERE 1=1
+        order by create_time DESC
+        <if test="offset!=null and limit!=null">
+            LIMIT #{offset} ,#{limit}
+        </if>
+    </select>
+
+    <update id="update">
+        UPDATE t_sso_role SET
+            <if test="roleName!=null">role_name=#{roleName},</if>
+            <if test="roleDescription!=null">role_description=#{roleDescription},</if>
+            <if test="updater!=null">updater=#{updater},</if>
+            <if test="updateTime!=null">update_time=#{updateTime}</if>
+        WHERE 1 = 1 AND id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM t_sso_role WHERE id = #{id}
+    </delete>
+    <sql id="roleField">role_name,role_description,creater,create_time,updater,update_time</sql>
+    <sql id="selectRoleField">id,role_name,role_description,creater,create_time,updater,update_time</sql>
+</mapper>

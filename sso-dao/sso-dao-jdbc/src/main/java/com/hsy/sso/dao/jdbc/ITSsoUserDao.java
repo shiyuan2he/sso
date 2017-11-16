@@ -29,5 +29,5 @@ public interface ITSsoUserDao {
      * @author heshiyuan 
      * @date 2017/10/26 13:10
      */
-    int insertUser(TSsoUser user);
+    Integer insertUser(TSsoUser user);
 }

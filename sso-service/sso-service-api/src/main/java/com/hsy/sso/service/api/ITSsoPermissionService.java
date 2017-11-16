@@ -1,6 +1,7 @@
 package com.hsy.sso.service.api;
 
 import com.hsy.bean.vo.PermissionBean;
+import com.hsy.sso.base.entity.sso.TSsoPermission;
 
 import java.util.List;
 
@@ -19,4 +20,12 @@ public interface ITSsoPermissionService {
     List<PermissionBean> getAllPermisstion() ;
 
     List<PermissionBean> getAllPermissionByUserId(Long userId) ;
+
+    List<TSsoPermission> getAll(Integer offset,Integer limit) ;
+
+    boolean insert(String authAddress,String authDescription,Long parentid,Long userId) ;
+
+    boolean update(Long id,String authAddress,String authDescription,Long parentid,Long userId) ;
+
+    boolean delete(Long id);
 }

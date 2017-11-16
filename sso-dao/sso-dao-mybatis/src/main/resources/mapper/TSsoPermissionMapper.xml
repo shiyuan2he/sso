@@ -3,17 +3,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hsy.sso.dao.mybatis.mapper.ITSsoPermissionMapper">
-    <sql id="selectPermissionField">
-        ${permission}.id as id,
-        ${permission}.auth_address as authAddress,
-        ${permission}.auth_description as authDescription,
-        ${permission}.parent_id as parentId
-    </sql>
+
     <select id="getAll" resultType="TSsoPermission">
         select
           <include refid="selectPermissionField"><property name="permission" value="aa"/></include>
         from  t_sso_permission aa
         where 1 = 1
+        <if test="offset!=null and limit!=null">
+            LIMIT #{offset} ,#{limit}
+        </if>
     </select>
 
     <select id="getAllOfUser" resultType="TSsoPermission">
@@ -29,4 +27,36 @@
             AND  user.id = #{userId};
         </if>
     </select>
+
+    <insert id="insert" parameterType="TSsoPermission">
+        INSERT  INTO t_sso_permission(
+                <include refid="permissionField"></include>
+        )VALUES (#{authAddress},#{authDescription},#{authImg},#{authStyle},#{parentId})
+    </insert>
+
+    <update id="update" parameterType="TSsoPermission">
+        UPDATE t_sso_user SET
+            <if test="authAddress!=null">auth_address = #{authAddress},</if>
+            <if test="authAddress!=null">auth_description = #{authDescription},</if>
+            <if test="authAddress!=null">auth_img = #{authImg},</if>
+            <if test="authAddress!=null">auth_style = #{authStyle},</if>
+            <if test="authAddress!=null">parent_id = #{parentId}</if>
+        where 1=1 AND id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="TSsoPermission">
+        DELETE FROM t_sso_user where 1 = 1 AND id = #{id}
+    </delete>
+
+    <sql id="permissionField">
+        auth_address,auth_description,auth_img,auth_style,parent_id
+    </sql>
+    <sql id="selectPermissionField">
+        ${permission}.id as id,
+        ${permission}.auth_address as authAddress,
+        ${permission}.auth_description as authDescription,
+        ${permission}.auth_img as authImg,
+        ${permission}.auth_style as authStyle,
+        ${permission}.parent_id as parentId
+    </sql>
 </mapper>

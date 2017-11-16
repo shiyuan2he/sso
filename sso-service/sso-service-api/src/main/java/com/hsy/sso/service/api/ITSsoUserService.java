@@ -1,5 +1,8 @@
 package com.hsy.sso.service.api;
 import com.hsy.bean.vo.SessionBean;
+import com.hsy.sso.base.entity.sso.TSsoUser;
+
+import java.util.List;
 
 /**
  * @author heshiyuan
@@ -38,4 +41,10 @@ public interface ITSsoUserService {
      * @date 2017/11/2 14:33
      */
     boolean logout(String ticket);
+
+    List<TSsoUser> getAll(Integer offset,Integer limit) ;
+
+    boolean update(Long id,String userName,String password,Long mobile,Long userId) ;
+
+    boolean delete(Long id) ;
 }

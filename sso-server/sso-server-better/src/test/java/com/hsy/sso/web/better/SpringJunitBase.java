@@ -1,4 +1,5 @@
 package com.hsy.sso.web.better;
+import com.hsy.java.util.spring.SpringWebJunitBase;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +25,14 @@ import org.springframework.web.filter.CharacterEncodingFilter;
  * @price ¥5    微信：hewei1109
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration("src/main/webapp")
+@WebAppConfiguration
 @ContextConfiguration(
         {
-                "classpath:/spring/spring-context.xml",
-                "classpath:/spring/spring-webmvc.xml"
+            "classpath:/spring/spring-context.xml",
+            "classpath:/spring/spring-webmvc.xml"
         }
 )
-public abstract class SpringJunitBase {
+public class SpringJunitBase extends SpringWebJunitBase{
 
     @Autowired private WebApplicationContext wac ;
     private MockMvc mockMvc ;
@@ -42,40 +43,8 @@ public abstract class SpringJunitBase {
                 .addFilter(new CharacterEncodingFilter(),"/*")
                 .build();
     }
-    public void postJsonRequest(String url,String json) throws Exception{
-        long start = System.currentTimeMillis();
-
-        MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders
-                        .post(url)
-                        .contentType("application/json;charset=utf-8")
-                        .content(json)
-                ;
-        this.mockMvc.perform(builder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn().getResponse().getContentAsString()
-        ;
-
-        long end = System.currentTimeMillis();
-        System.out.println("耗时：" + (end - start) + "ms.");
-    }
-    public void getJsonRequest(String url,String json) throws Exception{
-        long start = System.currentTimeMillis();
-
-        MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders
-                        .get(url)
-                        .contentType("application/json;charset=utf-8")
-                        .content(json)
-                ;
-        this.mockMvc.perform(builder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn().getResponse().getContentAsString()
-        ;
-
-        long end = System.currentTimeMillis();
-        System.out.println("耗时：" + (end - start) + "ms.");
+    @Override
+    public MockMvc getMockMvc() {
+        return this.mockMvc;
     }
 }

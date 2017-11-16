@@ -1,5 +1,10 @@
 package com.hsy.sso.dao.mybatis.mapper;
 
+import com.hsy.sso.base.entity.sso.TSsoRole;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
 /**
  * @author heshiyuan
  * @description <p></p>
@@ -11,4 +16,12 @@ package com.hsy.sso.dao.mybatis.mapper;
  * @price ¥5    微信：hewei1109
  */
 public interface ITSsoRoleMapper {
+
+    List<TSsoRole> getAll(@Param(value = "offset") Integer offset, @Param(value = "limit") Integer limit) ;
+
+    Integer insert(TSsoRole ssoRole) ;
+
+    Integer update(TSsoRole ssoRole) ;
+
+    Integer delete(Long id) ;
 }

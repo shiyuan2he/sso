@@ -1,6 +1,7 @@
 package com.hsy.sso.dao.mybatis.mapper;
 
 import com.hsy.sso.base.entity.sso.TSsoPermission;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface ITSsoPermissionMapper {
      * @author heshiyuan
      * @date 2017/11/14 10:50
      */
-    List<TSsoPermission> getAll();
+    List<TSsoPermission> getAll(@Param(value = "offset") Integer offset,@Param(value = "limit") Integer limit);
     /**
      * @description <p>查询某个用户的所有权限</p>
      * @param userId
@@ -30,4 +31,10 @@ public interface ITSsoPermissionMapper {
      * @date 2017/11/14 10:50
      */
     List<TSsoPermission> getAllOfUser(long userId);
+
+    Integer insert(TSsoPermission ssoPermission) ;
+
+    Integer delete(Long id) ;
+
+    Integer update(TSsoPermission ssoPermission);
 }

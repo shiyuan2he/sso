@@ -31,8 +31,8 @@ public class TSsoUserDaoImpl extends BaseDaoImpl implements ITSsoUserDao{
     }
 
     @Override
-    public int insertUser(TSsoUser user) {
-        int insertCount = 0 ;
+    public Integer insertUser(TSsoUser user) {
+        Integer insertCount = 0 ;
         try{
             insertCount = this.jdbcTemplate.update("insert ignore into t_sso_user(id,mobile,password,password_encryption_type) " +
                             "values(?,?,?,?)",

@@ -27,7 +27,7 @@ import java.io.IOException;
  * @price ¥5    微信：hewei1109
  */
 @RestController
-@RequestMapping("/sso/image")
+@RequestMapping("/api/sso/image")
 public class ImageController extends BaseController {
 
     private Logger _logger = LoggerFactory.getLogger(this.getClass()) ;
@@ -35,7 +35,7 @@ public class ImageController extends BaseController {
     @Autowired
     SpringRedisTemplateCache springRedisTemplateCache ;
 
-    @RequestMapping(value = "/code",method = RequestMethod.GET)
+    @RequestMapping(value = "/v1.0/code",method = RequestMethod.GET)
     public void getCode(HttpServletResponse response) throws IOException {
         _logger.info("【验证码生成器】正在生成验证码");
         VerificationCodeHelper verificationCodeHelper = VerificationCodeHelper.getInstance();
@@ -55,7 +55,7 @@ public class ImageController extends BaseController {
     public void setCaptchaProducer(Producer captchaProducer) {
         this.captchaProducer = captchaProducer;
     }
-    @RequestMapping(value = "/kaptchaCode",method = RequestMethod.GET)
+    @RequestMapping(value = "/v1.0/kaptchaCode",method = RequestMethod.GET)
     public void kaptchaCode(HttpServletRequest request,HttpServletResponse response) throws IOException {
         _logger.info("【验证码生成器】正在生成验证码");
         response.setDateHeader("Expires", 0);

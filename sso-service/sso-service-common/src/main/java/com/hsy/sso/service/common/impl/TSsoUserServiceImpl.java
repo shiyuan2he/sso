@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * @author heshiyuan
@@ -82,6 +83,34 @@ public class TSsoUserServiceImpl implements ITSsoUserService {
     public boolean logout(String ticket) {
         if(StringHelper.isNotNullOrEmpty(ticket)){
             springRedisTemplateCache.deleteCacheByKey(CommonConstant.TICKET_CACHE_KEY+ticket);
+            return true ;
+        }
+        return false;
+    }
+
+    @Override
+    public List<TSsoUser> getAll(Integer offset, Integer limit) {
+        return itSsoUserMapper.getAll(offset, limit);
+    }
+
+    @Override
+    public boolean update(Long id, String userName, String password,Long mobile,Long userId) {
+        TSsoUser user = new TSsoUser();
+        user.setId(id);
+        user.setUserName(userName);
+        user.setPassword(password);
+        user.setMobile(mobile);
+        user.setUpdater(userId);
+        user.setUpdateTime(Calendar.getInstance().getTime());
+        if(itSsoUserMapper.update(user) > 0){
+            return true ;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        if(itSsoUserMapper.delete(id) > 0){
             return true ;
         }
         return false;

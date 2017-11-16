@@ -40,6 +40,7 @@
         <version.jedis>2.9.0</version.jedis>
         <version.zkClient>0.8</version.zkClient>
         <version.kaptcha>2.3.2</version.kaptcha>
+        <logback.version>1.2.3</logback.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -177,12 +178,29 @@
                 <groupId>com.101tec</groupId>
                 <artifactId>zkclient</artifactId>
                 <version>${version.zkClient}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.google.code.kaptcha</groupId>
                 <artifactId>kaptcha</artifactId>
                 <version>${version.kaptcha}</version>
             </dependency>
+            <!-- logback + slf4j start -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <!-- logback + slf4j end -->
         </dependencies>
     </dependencyManagement>
     <build>

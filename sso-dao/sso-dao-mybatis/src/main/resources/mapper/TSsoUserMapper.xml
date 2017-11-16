@@ -4,8 +4,8 @@
 
 <mapper namespace="com.hsy.sso.dao.mybatis.mapper.ITSsoUserMapper">
     <select id="selectUser" resultType="TSsoUser">
-        SELECT id,user_code,user_name,password,password_encryption_type,
-            mobile
+        SELECT
+            <include refid="userField"></include>
         FROM sso.t_sso_user
         WHERE 1=1
               AND mobile = #{mobile}
@@ -17,4 +17,28 @@
               password_encryption_type,mobile)
         VALUES (#{id},#{userName},#{password},#{passwordEncryptionType},#{mobile})
     </insert>
+
+    <select id="getAll" resultType="TSsoUser">
+        SELECT
+        <include refid="userField"></include>
+        FROM t_sso_user
+        WHERE 1=1 order by create_time DESC
+        <if test="offset!=null and limit!=null">
+            LIMIT #{offset} ,#{limit}
+        </if>
+    </select>
+
+    <update id="update">
+        UPDATE t_sso_user SET
+            <if test="userName!=null">user_name=#{userName},</if>
+            <if test="password!=null">password=#{password},</if>
+            <if test="passwordEncryptionType!=null">password_encryption_type=#{passwordEncryptionType},</if>
+            <if test="mobile!=null">mobile=#{mobile}</if>
+        WHERE 1 = 1 AND id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM t_sso_user WHERE id = #{id}
+    </delete>
+    <sql id="userField">id,user_code,user_name,password,password_encryption_type,mobile,creater,create_time,updater,update_time</sql>
 </mapper>

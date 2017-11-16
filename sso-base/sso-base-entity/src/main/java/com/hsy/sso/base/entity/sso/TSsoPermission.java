@@ -9,6 +9,8 @@ public class TSsoPermission implements Serializable{
 	private Long id;
 	private String authAddress;
 	private String authDescription;
+	private String authImg ;
+	private String authStyle ;
 	private Long parentId;
 	private Long creater;
 	private Date createTime;
@@ -72,6 +74,22 @@ public class TSsoPermission implements Serializable{
 
     public void setChildren(List<TSsoPermission> children) {
         this.children = children;
+    }
+
+    public String getAuthImg() {
+        return authImg;
+    }
+
+    public void setAuthImg(String authImg) {
+        this.authImg = authImg;
+    }
+
+    public String getAuthStyle() {
+        return authStyle;
+    }
+
+    public void setAuthStyle(String authStyle) {
+        this.authStyle = authStyle;
     }
 }
 

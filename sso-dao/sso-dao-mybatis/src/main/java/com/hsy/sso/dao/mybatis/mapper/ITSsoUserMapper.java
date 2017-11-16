@@ -3,6 +3,8 @@ package com.hsy.sso.dao.mybatis.mapper;
 import com.hsy.sso.base.entity.sso.TSsoUser;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * @author heshiyuan
  * @description <p></p>
@@ -16,5 +18,11 @@ import org.apache.ibatis.annotations.Param;
 public interface ITSsoUserMapper {
     TSsoUser selectUser(@Param(value="mobile") Long mobile,@Param(value = "password") String password) ;
 
-    int insertUser(TSsoUser user) ;
+    Integer insertUser(TSsoUser user) ;
+
+    List<TSsoUser> getAll(@Param(value="offset") Integer offset,@Param(value = "limit") Integer limit) ;
+
+    Integer update(TSsoUser ssoUser);
+
+    Integer delete(Long id) ;
 }

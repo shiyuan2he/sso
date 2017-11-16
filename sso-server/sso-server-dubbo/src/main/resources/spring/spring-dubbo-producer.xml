@@ -21,4 +21,5 @@
     <!--使用 dubbo 协议实现定义好的 api.ITSsoUserService 接口-->
     <dubbo:service interface="com.hsy.sso.service.api.ITSsoUserService" ref="ssoUserService" protocol="dubbo"/>
     <dubbo:service interface="com.hsy.sso.service.api.ITSsoPermissionService" ref="ssoPermissionService" protocol="dubbo"/>
+    <dubbo:service interface="com.hsy.sso.service.api.ITSsoRoleService" ref="ssoRoleService" protocol="dubbo"/>
 </beans>

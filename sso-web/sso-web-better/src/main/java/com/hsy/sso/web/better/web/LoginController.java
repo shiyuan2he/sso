@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  * @price ¥5    微信：hewei1109
  */
 @RestController
-@RequestMapping("/sso")
+@RequestMapping("/api/sso/login")
 public class LoginController extends BaseController {
     private Logger _logger = LoggerFactory.getLogger(this.getClass()) ;
     @SuppressWarnings("SpringJavaAutowiringInspection")
@@ -39,7 +39,7 @@ public class LoginController extends BaseController {
     @Autowired
     SpringRedisTemplateCache springRedisTemplateCache ;
 
-    @RequestMapping(value = "/login",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/v1.0/login",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public ResponseBodyBean<Object> login(@RequestParam(value = "mobile") long mobile,
                                           @RequestParam(value = "password") String password,
@@ -75,7 +75,7 @@ public class LoginController extends BaseController {
             return failure();
         }
     }
-    @RequestMapping(value = "/logout",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/v1.0/logout",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public ResponseBodyBean<Object> logout(HttpServletRequest request, HttpServletResponse response){
         // 清除cookie
@@ -101,7 +101,7 @@ public class LoginController extends BaseController {
         return success() ;
     }
 
-    @RequestMapping(value = "/reg",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/v1.0/reg",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public ResponseBodyBean<Object> reg(@RequestParam(value = "mobile") long mobile,
                                         @RequestParam(value = "password") String password,
@@ -113,5 +113,22 @@ public class LoginController extends BaseController {
         }else{
             return failure() ;
         }
+    }
+    @RequestMapping(value = {"/v1.0/user/list","/v1.0/user/list/{offset}/{limit}"},
+            method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseBodyBean<Object> getAllUsers(@PathVariable(required = false) Integer offset,@PathVariable(required = false) Integer limit){
+        return success(ssoUserService.getAll(offset, limit)) ;
+    }
+
+    @RequestMapping(value = {"/v1.0/user/update/{id}"},
+            method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseBodyBean<Object> updateUser(@PathVariable Long id,String userName,String password,Long mobile,Long userId){
+        return success(ssoUserService.update(id,userName,password,mobile,userId)) ;
+    }
+
+    @RequestMapping(value = {"/v1.0/user/delete/{id}"},
+            method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseBodyBean<Object> deleteUser(@PathVariable Long id){
+        return success(ssoUserService.delete(id)) ;
     }
 }

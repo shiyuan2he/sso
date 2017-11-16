@@ -15,17 +15,12 @@ import org.springframework.util.MultiValueMap;
  * Copyright (c) 2017 shiyuan4work@sina.com All rights reserved.
  * @price ¥5    微信：hewei1109
  */
-public class AuthControllerTest extends SpringJunitBase {
+public class LoginControllerTest extends SpringJunitBase {
     MultiValueMap<String,Object> paramsMap = new LinkedMultiValueMap<>();
     @Test
     public void getAllPermission() throws Exception {
         paramsMap.clear();
-        this.getRequest("/api/sso/auth/v1.0/permissions/list",paramsMap);
-    }
-    @Test
-    public void getAllPermission2() throws Exception {
-        paramsMap.clear();
-        this.getRequest("/api/sso/auth/v2.0/role/list",paramsMap);
+        this.getRequest("/api/sso/auth/v1.0/role/list",paramsMap);
     }
 
     @Test
