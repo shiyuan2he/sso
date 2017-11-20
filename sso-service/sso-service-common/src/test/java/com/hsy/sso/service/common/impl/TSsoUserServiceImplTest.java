@@ -34,7 +34,7 @@ public class TSsoUserServiceImplTest {
 
     @Test
     public void reg() throws Exception {
-        _logger.info("reg={}",ssoUserService.reg(11111l,"123456"));
+       // _logger.info("reg={}",ssoUserService.reg(11111l,"123456"));
     }
 
 }

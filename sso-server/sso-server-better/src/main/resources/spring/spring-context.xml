@@ -35,4 +35,8 @@
     <!--<import resource="spring-aop.xml"/>-->
     <!--<import resource="spring-thread.xml"/>-->
     <!--<import resource="spring-tx.xml"/>-->
+
+    <bean class="com.hsy.java.exception.handle.GlobalExceptionHandle">
+        <property name="defaultView" value="/error/500"/>
+    </bean>
 </beans>
