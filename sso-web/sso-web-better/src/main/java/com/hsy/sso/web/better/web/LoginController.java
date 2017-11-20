@@ -103,12 +103,16 @@ public class LoginController extends BaseController {
 
     @RequestMapping(value = "/v1.0/reg",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseBodyBean<Object> reg(@RequestParam(value = "mobile") long mobile,
-                                        @RequestParam(value = "password") String password,
-                                        @RequestParam(value = "callback",required = false) String callback){
+    public ResponseBodyBean<Object> reg(@RequestParam(value = "userName",required = false) String userName,
+                                        @RequestParam(value = "mobile") long mobile,
+                                        @RequestParam(value = "password",required = false) String password,
+                                        @RequestParam(value = "sex",required = false) Short sex,
+                                        @RequestParam(value = "email",required = false) String email,
+                                        @RequestParam(value = "remark",required = false) String remark,
+                                        @RequestParam(value = "userId") Long userId){
 
-        ParamValidation.notNullValid(mobile, password); // 参数非空校验
-        if(ssoUserService.reg(mobile,password)){
+        ParamValidation.notNullValid(mobile); // 参数非空校验
+        if(ssoUserService.reg(userName,mobile,password,sex,email,remark,userId)){
             return success() ;
         }else{
             return failure() ;

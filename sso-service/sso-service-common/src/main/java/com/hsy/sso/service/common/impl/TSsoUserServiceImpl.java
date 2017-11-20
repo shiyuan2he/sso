@@ -63,16 +63,38 @@ public class TSsoUserServiceImpl implements ITSsoUserService {
         return null ;
     }
     @Override
-    public boolean reg(Long mobile, String password) {
+    public boolean reg(String userName,Long mobile, String password,Short sex,String email,String remark,Long userId) {
         TSsoUser ssoUser = new TSsoUser() ;
         String id = StringHelper.generateRandomOfStringByLength(19) ;
         ssoUser.setId(Long.parseLong(id));
         ssoUser.setMobile(mobile);
-        ssoUser.setPassword(Base64Helper.stringToBase64OfCc(password));
+        if (StringHelper.isNullOrEmpty(password)){
+            ssoUser.setPassword(Base64Helper.stringToBase64OfCc("123"));
+        }else{
+            ssoUser.setPassword(Base64Helper.stringToBase64OfCc(password));
+        }
         ssoUser.setPasswordEncryptionType(ConstantEnum.ENCRYPTION_TYPE_BASE64.getCode());
-        ssoUser.setUserName("sso"+System.currentTimeMillis());
-        ssoUser.setCreater(Long.parseLong(id));
+        if (StringHelper.isNullOrEmpty(userName)){
+            ssoUser.setUserName("sso"+System.currentTimeMillis());
+        }else{
+            ssoUser.setUserName(userName);
+        }
+        if(null == userId){
+            ssoUser.setCreater(Long.parseLong(id));
+        }else{
+            ssoUser.setCreater(userId);
+        }
+        if(StringHelper.isNotNullOrEmpty(email)){
+            ssoUser.setEmail(email);
+        }
+        if(null!=sex){
+            ssoUser.setSex(sex);
+        }
+        if(StringHelper.isNotNullOrEmpty(remark)){
+            ssoUser.setRemark(remark);
+        }
         ssoUser.setCreateTime(Calendar.getInstance().getTime());
+        ssoUser.setIsDel((short)0);
         if(itSsoUserMapper.insertUser(ssoUser)==1){
             return true ;
         }

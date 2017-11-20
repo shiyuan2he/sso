@@ -10,12 +10,16 @@ public class TSsoUser implements Serializable{
 	private String userName;
 	private String password;
 	private String passwordEncryptionType;
+	private Short sex ;
 	private Long mobile;
+	private String email ;
 	private Long creater;
 	private Date createTime;
 	private Long updater;
 	private Date updateTime;
 	private String source;
+	private String remark ;
+	private Short isDel ;
 	public void setId(Long id){
 		this.id=id;
 	}
@@ -82,5 +86,37 @@ public class TSsoUser implements Serializable{
 	public String getSource(){
 		return source;
 	}
+
+    public Short getSex() {
+        return sex;
+    }
+
+    public void setSex(Short sex) {
+        this.sex = sex;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Short getIsDel() {
+        return isDel;
+    }
+
+    public void setIsDel(Short isDel) {
+        this.isDel = isDel;
+    }
 }
 

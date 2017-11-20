@@ -17,15 +17,15 @@ import java.util.List;
  */
 public interface ITSsoPermissionService {
 
-    List<PermissionBean> getAllPermisstion() ;
+    List<PermissionBean> getAllPermisstion() throws Exception;
 
-    List<PermissionBean> getAllPermissionByUserId(Long userId) ;
+    List<PermissionBean> getAllPermissionByUserId(Long userId) throws Exception;
 
-    List<TSsoPermission> getAll(Integer offset,Integer limit) ;
+    List<TSsoPermission> getAll(Integer offset,Integer limit) throws Exception;
 
-    boolean insert(String authAddress,String authDescription,Long parentid,Long userId) ;
+    boolean insert(String authAddress,String authDescription,Long parentid,Long userId) throws Exception;
 
-    boolean update(Long id,String authAddress,String authDescription,Long parentid,Long userId) ;
+    boolean update(Long id,String authAddress,String authDescription,Long parentid,Long userId) throws Exception;
 
-    boolean delete(Long id);
+    boolean delete(Long id) throws Exception;
 }

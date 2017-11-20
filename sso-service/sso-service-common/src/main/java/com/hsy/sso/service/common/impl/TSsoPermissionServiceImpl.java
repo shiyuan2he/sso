@@ -1,6 +1,8 @@
 package com.hsy.sso.service.common.impl;
 
 import com.hsy.bean.vo.PermissionBean;
+import com.hsy.java.enums.DBEnum;
+import com.hsy.java.exception.dao.DBHandleException;
 import com.hsy.sso.base.entity.sso.TSsoPermission;
 import com.hsy.sso.dao.mybatis.mapper.ITSsoPermissionMapper;
 import com.hsy.sso.service.api.ITSsoPermissionService;
@@ -28,19 +30,31 @@ public class TSsoPermissionServiceImpl implements ITSsoPermissionService {
     @Autowired private ITSsoPermissionMapper itSsoPermissionMapper ;
     @Override
     public List<PermissionBean> getAllPermisstion() {
-        return generateXIndex(itSsoPermissionMapper.getAll(null,null));
+        List<TSsoPermission> list = itSsoPermissionMapper.getAll(null,null) ;
+        if(list.size()>0){
+            return generateXIndex(list);
+        }else{
+            throw new DBHandleException(DBEnum.DB_SELECT_IS_NULL) ;
+        }
     }
-
-
-
     @Override
     public List<PermissionBean> getAllPermissionByUserId(Long userId) {
-        return generateXIndex(itSsoPermissionMapper.getAllOfUser(userId) ) ;
+        List<TSsoPermission> list = itSsoPermissionMapper.getAllOfUser(userId) ;
+        if(list.size()>0){
+            return generateXIndex(list);
+        }else{
+            throw new DBHandleException(DBEnum.DB_SELECT_IS_NULL) ;
+        }
     }
 
     @Override
     public List<TSsoPermission> getAll(Integer offset, Integer limit) {
-        return itSsoPermissionMapper.getAll(offset,limit);
+        List<TSsoPermission> list = itSsoPermissionMapper.getAll(offset,limit) ;
+        if(list.size()>0){
+            return list ;
+        }else {
+            throw new DBHandleException(DBEnum.DB_SELECT_IS_NULL) ;
+        }
     }
 
     @Override

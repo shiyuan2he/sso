@@ -30,22 +30,22 @@ public class AuthController extends BaseController{
     @Autowired private ITSsoRoleService ssoRoleService ;
 
     @RequestMapping(value = {"/v1.0/permissions/list"},method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseBodyBean<Object> getAllPermission() {
+    public ResponseBodyBean<Object> getAllPermission() throws Exception{
         return success(ssoPermissionService.getAllPermisstion()) ;
     }
 
     @RequestMapping(value = {"/v2.0/permissions/list","/v2.0/permission/list/{offset}/{limit}"},method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseBodyBean<Object> getAllPermission(@PathVariable(value = "offset",required = false) Integer offset,
-                                                     @PathVariable(value = "limit",required = false) Integer limit) {
+                                                     @PathVariable(value = "limit",required = false) Integer limit) throws Exception{
         return success(ssoPermissionService.getAll(offset,limit)) ;
     }
 
     @RequestMapping(value = "/v1.0/permission/list/{userId}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseBodyBean<Object> getAllPermissionByUserId(@PathVariable(value = "userId") Long userId){
+    public ResponseBodyBean<Object> getAllPermissionByUserId(@PathVariable(value = "userId") Long userId) throws Exception{
         return success(ssoPermissionService.getAllPermissionByUserId(userId));
     }
     @RequestMapping(value = "/v1.0/permission/add",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseBodyBean<Object> addPermission(String authAddress,String authDescription,Long parentId,Long userId){
+    public ResponseBodyBean<Object> addPermission(String authAddress,String authDescription,Long parentId,Long userId) throws Exception{
         return success(ssoPermissionService.insert(authAddress,authDescription,parentId,userId)) ;
     }
     @RequestMapping(value = "/v1.0/permission/update/{id}",method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -53,11 +53,11 @@ public class AuthController extends BaseController{
                                                      String authAddress,
                                                      String authDescription,
                                                      Long parentId,
-                                                     Long userId){
+                                                     Long userId) throws Exception{
         return success(ssoPermissionService.update(id,authAddress,authDescription,parentId,userId));
     }
     @RequestMapping(value = "/v1.0/permission/delete/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseBodyBean<Object> deletePermission(@PathVariable(value = "id") Long id){
+    public ResponseBodyBean<Object> deletePermission(@PathVariable(value = "id") Long id) throws Exception{
         return success(ssoPermissionService.delete(id));
     }
 

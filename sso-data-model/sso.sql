@@ -80,4 +80,9 @@ create table t_sso_role_permission(
   UNIQUE KEY 'idx_uqi_roleId_permissionId' (role_id,permission_id)
 ) ENGINE = InnoDB AUTO_INCREMENT=1 CHARSET utf8 COMMENT '角色权限表';
 
+alter table t_sso_user add column sex TINYINT(1) NOT NULL DEFAULT 1 COMMENT '性别：1男2女' AFTER password_encryption_type;
+alter table t_sso_user add column email VARCHAR(50) DEFAULT '' COMMENT '用户邮箱' AFTER mobile;
+alter table t_sso_user add column remark VARCHAR(100) DEFAULT '' COMMENT '备注' AFTER source;
+alter table t_sso_user add column is_del TINYINT(1) DEFAULT '0' not null COMMENT '是否删除' AFTER remark;
+
 
