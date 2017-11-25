@@ -14,7 +14,7 @@
     <context:component-scan base-package="com.hsy.sso.service.common.impl"/>
 
     <dubbo:application name="sso-service-better-dubbo-provider"/>
-    <dubbo:registry address="zookeeper://192.168.216.129:2818"/>
+    <dubbo:registry address="zookeeper://192.168.145.128:2818"/>
     <dubbo:protocol name="dubbo" port="20881"/>
     <dubbo:monitor protocol="registry"/>
 
