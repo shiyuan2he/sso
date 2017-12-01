@@ -1,4 +1,3 @@
-
 DROP TABLE IF EXISTS `t_sso_user`;
 CREATE TABLE `t_sso_user` (
   `id` bigint(19) NOT NULL PRIMARY KEY DEFAULT '0' COMMENT '主键',
@@ -47,7 +46,7 @@ create table t_sso_user_role(
   role_id BIGINT(19) NOT NULL DEFAULT 0 COMMENT '关联角色表主键',
   FOREIGN KEY(user_id) REFERENCES t_sso_user(id),
   FOREIGN KEY(role_id) REFERENCES t_sso_role(id),
-  UNIQUE KEY 'idx_uqi_userId_roleId' (user_id,role_id)
+  UNIQUE KEY idx_uqi_userId_roleId (user_id,role_id)
 ) ENGINE = InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET = utf8 COMMENT '用户角色表';
 
 insert into t_sso_user_role(user_id,role_id) values(0,1);
@@ -59,7 +58,7 @@ create table t_sso_permission(
   auth_address VARCHAR(100) NOT NULL UNIQUE DEFAULT '' COMMENT '权限地址',
   auth_description VARCHAR(100) NOT NULL DEFAULT '' COMMENT '权限描述',
   parent_id BIGINT(19) NOT NULL DEFAULT 0 COMMENT '父级id',
-  auth_type VARCHAR(10) not NULL DEFAULT null COMMENT '权限类型：BUTTON:按钮 MENU:菜单',
+  auth_type VARCHAR(10) not NULL DEFAULT '' COMMENT '权限类型：BUTTON:按钮 MENU:菜单',
   creater BIGINT(19) NOT NULL DEFAULT 0 COMMENT '创建者',
   create_time TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   updater BIGINT(19) DEFAULT 0 COMMENT '更新者',
@@ -71,12 +70,12 @@ insert into t_sso_permission
 (auth_address,auth_description,parent_id,creater,create_time)
 values
   ('/sso/user/list','用户管理',0,0,now()),
-  ('/sso/user/add/{id}','添加用户',0,0,now()),
+  ('/sso/user/insert/{id}','添加用户',0,0,now()),
   ('/sso/user/update/{id}','修改用户',0,0,now()),
   ('/sso/user/delete/{id}','删除用户',0,0,now()),
-  ('/sso/role/delete/{id}','角色管理',0,0,now()),
-  ('/sso/role/delete/{id}','添加角色',0,0,now()),
-  ('/sso/role/delete/{id}','修改角色',0,0,now()),
+  ('/sso/role/list','角色管理',0,0,now()),
+  ('/sso/role/insert/{id}','添加角色',0,0,now()),
+  ('/sso/role/update/{id}','修改角色',0,0,now()),
   ('/sso/role/delete/{id}','删除角色',0,0,now())
 ;
 
@@ -87,12 +86,8 @@ create table t_sso_role_permission(
   permission_id BIGINT(19) NOT NULL DEFAULT 0 COMMENT '关联角色表主键',
   FOREIGN KEY(role_id) references t_sso_role(id),
   FOREIGN KEY(permission_id) REFERENCES t_sso_permission(id),
-  UNIQUE KEY 'idx_uqi_roleId_permissionId' (role_id,permission_id)
+  UNIQUE KEY idx_uqi_roleId_permissionId (role_id,permission_id)
 ) ENGINE = InnoDB AUTO_INCREMENT=1 CHARSET utf8 COMMENT '角色权限表';
 
-alter table t_sso_user add column sex TINYINT(1) NOT NULL DEFAULT 1 COMMENT '性别：1男2女' AFTER password_encryption_type;
-alter table t_sso_user add column email VARCHAR(50) DEFAULT '' COMMENT '用户邮箱' AFTER mobile;
-alter table t_sso_user add column remark VARCHAR(100) DEFAULT '' COMMENT '备注' AFTER source;
-alter table t_sso_user add column is_del TINYINT(1) DEFAULT '0' not null COMMENT '是否删除' AFTER remark;
 
 
