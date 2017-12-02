@@ -1,6 +1,6 @@
 package com.hsy.sso.service.api;
 
-import com.hsy.bean.vo.PermissionBean;
+import com.hsy.java.bean.vo.PermissionBean;
 import com.hsy.sso.base.entity.sso.TSsoPermission;
 
 import java.util.List;

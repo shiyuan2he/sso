@@ -30,6 +30,8 @@
     </parent>
 
     <properties>
+        <version.build.jdk>1.8</version.build.jdk>
+        <version.env.encoding>utf-8</version.env.encoding>
         <version.servlet.api>3.1.0</version.servlet.api>
         <version.hsy.java>1.0</version.hsy.java>
         <version.hsy.sso>1.0</version.hsy.sso>
@@ -203,6 +205,30 @@
             <!-- logback + slf4j end -->
         </dependencies>
     </dependencyManagement>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <jdk>1.8</jdk>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <env>test</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <env>prod</env>
+            </properties>
+        </profile>
+    </profiles>
     <build>
         <plugins>
             <!-- java编译插件 -->
@@ -210,16 +236,16 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
+                    <source>${version.build.jdk}</source>
+                    <target>${version.build.jdk}</target>
+                    <encoding>${version.env.encoding}</encoding>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <configuration>
-                    <encoding>UTF-8</encoding>
+                    <encoding>${version.build.jdk}</encoding>
                 </configuration>
             </plugin>
         </plugins>
