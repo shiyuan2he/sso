@@ -1,12 +1,5 @@
 package com.hsy.sso.base.common.constants;
-
-import com.hsy.java.base.utils.PropertiesFileUtil;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Properties;
+import com.hsy.java.java.base.utils.PropertiesFileUtil;
 
 /**
  * @author heshiyuan

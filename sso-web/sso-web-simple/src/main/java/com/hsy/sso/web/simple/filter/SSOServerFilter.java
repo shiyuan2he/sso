@@ -1,5 +1,5 @@
 package com.hsy.sso.web.simple.filter;
-import com.hsy.java.base.string.StringHelper;
+import com.hsy.java.java.base.string.StringHelper;
 import com.hsy.java.util.cache.jvm.TicketCache;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

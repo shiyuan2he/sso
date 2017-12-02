@@ -1,6 +1,5 @@
 package com.hsy.sso.service.common.impl;
-
-import com.hsy.bean.vo.PermissionBean;
+import com.hsy.java.bean.vo.PermissionBean;
 import com.hsy.java.enums.DBEnum;
 import com.hsy.java.exception.dao.DBHandleException;
 import com.hsy.sso.base.entity.sso.TSsoPermission;

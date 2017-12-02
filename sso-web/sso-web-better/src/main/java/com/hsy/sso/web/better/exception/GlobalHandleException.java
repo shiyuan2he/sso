@@ -1,16 +1,13 @@
 package com.hsy.sso.web.better.exception;
 
 import com.alibaba.fastjson.JSON;
-import com.hsy.bean.dto.ResponseBodyBean;
+import com.hsy.java.bean.dto.ResponseBodyBean;
 import com.hsy.java.exception.service.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;

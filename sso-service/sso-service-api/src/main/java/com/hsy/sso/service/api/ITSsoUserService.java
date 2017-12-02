@@ -1,5 +1,5 @@
 package com.hsy.sso.service.api;
-import com.hsy.bean.vo.SessionBean;
+import com.hsy.java.bean.vo.SessionBean;
 import com.hsy.sso.base.entity.sso.TSsoUser;
 
 import java.util.List;

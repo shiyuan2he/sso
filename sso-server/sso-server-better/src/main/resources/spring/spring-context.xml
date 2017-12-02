@@ -11,6 +11,12 @@
 		http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc.xsd
     ">
+    <import resource="spring-config.xml"/>
+    <import resource="spring-dao.xml"/>
+    <import resource="spring-redis.xml"/>
+    <import resource="spring-service.xml"/>
+    <import resource="spring-kaptcha.xml"/>
+    <import resource="spring-dubbo-consumer.xml"/>
     <!--扫描web相关的controller-->
     <context:component-scan base-package="com.hsy.sso.web.better.web"/>
     <!--扫描web相关的controller-->
@@ -26,15 +32,7 @@
     	2、允许使用"/"做整体映射
     -->
     <mvc:default-servlet-handler/>
-    <import resource="spring-dao.xml"/>
-    <import resource="spring-redis.xml"/>
-    <import resource="spring-service.xml"/>
-    <import resource="spring-kaptcha.xml"/>
-    <import resource="spring-dubbo-consumer.xml"/>
-    <!--<import resource="spring-quartz.xml"/>-->
-    <!--<import resource="spring-aop.xml"/>-->
-    <!--<import resource="spring-thread.xml"/>-->
-    <!--<import resource="spring-tx.xml"/>-->
+
 
     <bean class="com.hsy.java.exception.handle.GlobalExceptionHandle">
         <property name="defaultView" value="/error/500"/>

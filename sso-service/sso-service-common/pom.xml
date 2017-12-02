@@ -25,18 +25,6 @@
         </dependency>
         <dependency>
             <groupId>com.hsy.sso</groupId>
-            <artifactId>sso-base-bean</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.hsy.java</groupId>
-            <artifactId>java-bean</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.hsy.sso</groupId>
-            <artifactId>sso-base-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.hsy.sso</groupId>
             <artifactId>sso-dao-jdbc</artifactId>
         </dependency>
         <dependency>

@@ -1,8 +1,8 @@
 package com.hsy.sso.web.better.web;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
-import com.hsy.bean.web.BaseController;
-import com.hsy.java.base.utils.VerificationCodeHelper;
+import com.hsy.java.bean.web.BaseController;
+import com.hsy.java.java.base.utils.VerificationCodeHelper;
 import com.hsy.sso.base.common.constants.CommonConstant;
 import com.hsy.sso.dao.redis.cache.SpringRedisTemplateCache;
 import org.slf4j.Logger;

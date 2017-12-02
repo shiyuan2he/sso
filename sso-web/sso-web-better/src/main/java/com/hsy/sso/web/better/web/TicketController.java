@@ -1,8 +1,7 @@
 package com.hsy.sso.web.better.web;
-
-import com.hsy.bean.dto.ResponseBodyBean;
-import com.hsy.bean.vo.SessionBean;
-import com.hsy.bean.web.BaseController;
+import com.hsy.java.bean.dto.ResponseBodyBean;
+import com.hsy.java.bean.vo.SessionBean;
+import com.hsy.java.bean.web.BaseController;
 import com.hsy.sso.base.common.constants.CommonConstant;
 import com.hsy.sso.dao.redis.cache.SpringRedisTemplateCache;
 import org.slf4j.Logger;
