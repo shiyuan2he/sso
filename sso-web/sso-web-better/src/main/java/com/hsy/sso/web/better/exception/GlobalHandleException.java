@@ -27,12 +27,6 @@ public class GlobalHandleException implements HandlerExceptionResolver{
     private final Logger _logger = LoggerFactory.getLogger(GlobalHandleException.class) ;
     @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
-        //这里有2种选择
-        //跳转到定制化的错误页面
-        /*ModelAndView error = new ModelAndView();
-        error.setViewName("/error/500");
-        error.addObject("code", ((BusinessException) e).getCode());
-        error.addObject("message", e.getMessage());*/
         //返回json格式的错误信息
         try {
             httpServletResponse.setContentType("text/html;charset=UTF-8");

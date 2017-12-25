@@ -3,8 +3,6 @@ import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.hsy.java.bean.web.BaseController;
 import com.hsy.java.java.base.utils.VerificationCodeHelper;
-import com.hsy.sso.base.common.constants.CommonConstant;
-import com.hsy.sso.dao.redis.cache.SpringRedisTemplateCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
