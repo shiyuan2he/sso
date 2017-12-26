@@ -6,17 +6,13 @@ import com.hsy.java.bean.web.BaseController;
 import com.hsy.java.enums.CacheEnum;
 import com.hsy.java.enums.SsoEnum;
 import com.hsy.java.java.base.string.StringHelper;
-import com.hsy.java.util.validation.ParamValidation;
-import com.hsy.sso.base.common.constants.CommonConstant;
-import com.hsy.sso.dao.redis.cache.SpringRedisTemplateCache;
-import com.hsy.sso.server.best.dao.impl.SpringDataRedisDao;
-import com.hsy.sso.service.api.ITSsoUserService;
+import com.hsy.sso.server.best.dao.RestfulInterfaceInvoke;
+import com.hsy.sso.server.best.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,10 +33,11 @@ public class LoginController extends BaseController {
     private Logger _logger = LoggerFactory.getLogger(this.getClass()) ;
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
-    ITSsoUserService ssoUserService ;
+    IUserService userService ;
+    //@Autowired
+    //SpringDataRedisDao springDataRedisDao ;
     @Autowired
-    SpringDataRedisDao springDataRedisDao ;
-
+    RestfulInterfaceInvoke restfulInterfaceInvoke ;
     @RequestMapping(value = "/v1/login",method = RequestMethod.GET)
     @ResponseBody
     public ResponseBodyBean<Object> login(@RequestParam(value = "mobile") long mobile,
@@ -51,12 +48,14 @@ public class LoginController extends BaseController {
         _logger.info("【sso登陆-购票大厅】进入sso购票大厅。。。");
 
         codeImage = codeImage.toUpperCase() ;
-        String redisImageCode = springDataRedisDao.getValue(CacheEnum.CACHE_KEY_IMAGE_CODE+codeImage);
+        //String redisImageCode = (String) springDataRedisDao.getCache(CacheEnum.CACHE_KEY_IMAGE_CODE.getCode()+codeImage,String.class);
+        ResponseBodyBean<Object> data = restfulInterfaceInvoke.getStringValue(CacheEnum.CACHE_KEY_IMAGE_CODE.getCode()+codeImage);
+        String redisImageCode = (String) data.getData() ;
         if(StringHelper.isNullOrEmpty(redisImageCode)){
             return failure("SSO9999","验证码不正确,或者超时60秒");
         }
 
-        SessionBean sessionBean = ssoUserService.login(mobile, password) ;
+        SessionBean sessionBean = userService.login(0l,mobile, "",password) ;
         //将用户信息放进session中,暂无用处
         request.getSession().setAttribute(SsoEnum.SSO_KEY_USER_SESSION.getCode(),sessionBean);
 
@@ -97,7 +96,7 @@ public class LoginController extends BaseController {
         }
 
         // 清除redis缓存
-        ssoUserService.logout(ticket);
+        userService.logout(ticket);
         return success() ;
     }
 
@@ -111,28 +110,11 @@ public class LoginController extends BaseController {
                                         @RequestParam(value = "remark",required = false) String remark,
                                         @RequestParam(value = "userId") Long userId){
 
-        ParamValidation.notNullValid(mobile); // 参数非空校验
-        if(ssoUserService.reg(userName,mobile,password,sex,email,remark,userId)){
+        //ParamValidation.notNullValid(mobile); // 参数非空校验
+        if(userService.reg(userName,mobile,password,sex,email,remark,userId)){
             return success() ;
         }else{
             return failure() ;
         }
-    }
-    @RequestMapping(value = {"/v1/user/list","/v1.0/user/list/{offset}/{limit}"},
-            method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseBodyBean<Object> getAllUsers(@PathVariable(required = false) Integer offset,@PathVariable(required = false) Integer limit){
-        return success(ssoUserService.getAll(offset, limit)) ;
-    }
-
-    @RequestMapping(value = {"/v1/user/update/{id}"},
-            method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseBodyBean<Object> updateUser(@PathVariable Long id,String userName,String password,Long mobile,Long userId){
-        return success(ssoUserService.update(id,userName,password,mobile,userId)) ;
-    }
-
-    @RequestMapping(value = {"/v1/user/delete/{id}"},
-            method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseBodyBean<Object> deleteUser(@PathVariable Long id){
-        return success(ssoUserService.delete(id)) ;
     }
 }

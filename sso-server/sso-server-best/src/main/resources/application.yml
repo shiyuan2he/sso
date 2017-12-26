@@ -1,0 +1,5 @@
+#${AnsiColor.BRIGHT_GREEN}
+spring:
+  profiles:
+    active: company
+#spring.http.encoding.charset=utf-8

@@ -1,16 +1,19 @@
 package com.hsy.sso.server.best.service.impl;
+import com.hsy.java.bean.dto.ResponseBodyBean;
 import com.hsy.java.bean.vo.SessionBean;
+import com.hsy.java.bean.vo.UserInfoBean;
 import com.hsy.java.enums.BusinessEnum;
 import com.hsy.java.enums.CacheEnum;
-import com.hsy.java.enums.ConstantEnum;
+import com.hsy.java.exception.service.BusinessException;
 import com.hsy.java.java.base.string.StringHelper;
+import com.hsy.sso.server.best.dao.RestfulInterfaceInvoke;
 import com.hsy.sso.server.best.dao.impl.SpringDataRedisDao;
 import com.hsy.sso.server.best.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Calendar;
+import java.util.UUID;
 
 /**
  * @author heshiyuan
@@ -22,43 +25,48 @@ import java.util.Calendar;
  * Copyright (c) 2017 shiyuan4work@sina.com All rights reserved.
  * @price ¥5    微信：hewei1109
  */
-@Service("ssoUserService")
-
+@Service("userService")
 public class UserServiceImpl implements IUserService {
     private Logger _logger = LoggerFactory.getLogger(this.getClass());
 
+    //@Autowire
+    // SpringDataRedisDao springDataRedisDao ;
     @Autowired
-    SpringDataRedisDao springDataRedisDao ;
-
+    RestfulInterfaceInvoke restfulInterfaceInvoke ;
 
     @Override
-    public SessionBean login(Long mobile, String password){
+    public SessionBean login(Long id,Long mobile,String username,String password){
         String ticket = "";
         try{
-            TSsoUser ssoUser = itSsoUserMapper.selectUser(mobile,Base64Helper.stringToBase64OfCc(password));
-            if(null!=ssoUser){
-                // 也叫tokenId 生成一张通票，并将这张票保存在缓存当中
-                ticket = mobile + System.currentTimeMillis() + "";
-                SessionBean sessionBean = new SessionBean() ;
-                sessionBean.setMobile(mobile);
-                sessionBean.setTicket(ticket);
-                _logger.info("【sso登陆-购票大厅】{}购票成功,通票是{}",mobile,ticket);
-                springDataRedisDao.getValue(CacheEnum.CACHE_KEY_IMAGE_CODE) .putCacheWithExpireTime(CommonConstant.TICKET_CACHE_KEY+ticket,sessionBean,2 * 60) ;
-                _logger.info("【sso登陆-购票大厅】将key={},value={}存在缓存当中",mobile);
-                return sessionBean ;
+            ResponseBodyBean<UserInfoBean> userInfoDto = restfulInterfaceInvoke.queryUserInfo(id,mobile,username,password) ;
+            if(!userInfoDto.isSuccess()){
+                return null ;
             }
+            UserInfoBean userInfoBean = userInfoDto.getData() ;
+            // 生成一张同一时空下唯一通票，并将这张票保存在缓存当中
+            ticket = UUID.randomUUID().toString() ;
+            _logger.info("【sso登陆-购票大厅】{}购票成功,通票是{}",mobile,ticket);
+            //springDataRedisDao.putCacheWithExpireTime(CacheEnum.CACHE_KEY_TICKET.getCode() + mobile,ticket,60l);
+            restfulInterfaceInvoke.setStringValue(CacheEnum.CACHE_KEY_TICKET.getCode() + mobile,ticket);
+            _logger.info("【sso登陆-购票大厅】将key={},value={}存在缓存当中",CacheEnum.CACHE_KEY_TICKET.getCode() + mobile,ticket);
+            SessionBean sessionBean = new SessionBean() ;
+            sessionBean.setMobile(mobile);
+            sessionBean.setTicket(ticket);
+            sessionBean.setUserName(userInfoBean.getUserName());
+            sessionBean.setUserId(userInfoBean.getUserId());
+            sessionBean.setUserCode(userInfoBean.getUserCode());
+            return sessionBean ;
         }catch(Exception e){
             // 登陆失败，清除此人票务信息
             if(null!=ticket&&!"".equals(ticket)){
-                springRedisTemplateCache.deleteCacheByKey(CommonConstant.TICKET_CACHE_KEY+ticket);
+                //springDataRedisDao.deleteCacheByKey(CacheEnum.CACHE_KEY_TICKET.getCode() + mobile);
             }
             throw new BusinessException(BusinessEnum.LOGIN_EXCEPTION) ;
         }
-        return null ;
     }
     @Override
     public boolean reg(String userName,Long mobile, String password,Short sex,String email,String remark,Long userId) {
-        TSsoUser ssoUser = new TSsoUser() ;
+        /*TSsoUser ssoUser = new TSsoUser() ;
         String id = StringHelper.generateRandomOfStringByLength(19) ;
         ssoUser.setId(Long.parseLong(id));
         ssoUser.setMobile(mobile);
@@ -91,42 +99,14 @@ public class UserServiceImpl implements IUserService {
         ssoUser.setIsDel((short)0);
         if(itSsoUserMapper.insertUser(ssoUser)==1){
             return true ;
-        }
+        }*/
         return false;
     }
 
     @Override
-    public boolean logout(String ticket) {
-        if(StringHelper.isNotNullOrEmpty(ticket)){
-            springRedisTemplateCache.deleteCacheByKey(CommonConstant.TICKET_CACHE_KEY+ticket);
-            return true ;
-        }
-        return false;
-    }
-
-    @Override
-    public List<TSsoUser> getAll(Integer offset, Integer limit) {
-        return itSsoUserMapper.getAll(offset, limit);
-    }
-
-    @Override
-    public boolean update(Long id, String userName, String password,Long mobile,Long userId) {
-        TSsoUser user = new TSsoUser();
-        user.setId(id);
-        user.setUserName(userName);
-        user.setPassword(password);
-        user.setMobile(mobile);
-        user.setUpdater(userId);
-        user.setUpdateTime(Calendar.getInstance().getTime());
-        if(itSsoUserMapper.update(user) > 0){
-            return true ;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean delete(Long id) {
-        if(itSsoUserMapper.delete(id) > 0){
+    public boolean logout(String mobile) {
+        if(StringHelper.isNotNullOrEmpty(mobile)){
+           // springDataRedisDao.deleteCacheByKey(CacheEnum.CACHE_KEY_TICKET.getCode() + mobile);
             return true ;
         }
         return false;

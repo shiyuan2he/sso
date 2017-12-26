@@ -1,12 +1,8 @@
 package com.hsy.sso.server.best.web;
 import com.hsy.java.bean.dto.ResponseBodyBean;
-import com.hsy.java.bean.vo.SessionBean;
 import com.hsy.java.bean.web.BaseController;
-import com.hsy.sso.base.common.constants.CommonConstant;
-import com.hsy.sso.dao.redis.cache.SpringRedisTemplateCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -27,12 +23,12 @@ public class TicketController extends BaseController {
 
     private Logger _logger = LoggerFactory.getLogger(this.getClass()) ;
 
-    @Autowired
-    SpringRedisTemplateCache springRedisTemplateCache ;
+    //@Autowired
+    //SpringRedisTemplateCache springRedisTemplateCache ;
     @RequestMapping(value = "/{ticket}",produces = "application/json;charset=UTF-8",method = RequestMethod.GET)
     @ResponseBody
     public ResponseBodyBean<Object> getTicket(@PathVariable(value = "ticket") long ticket) throws IOException {
-        _logger.info("【验票大厅】欢迎进入验票大厅");
+       /* _logger.info("【验票大厅】欢迎进入验票大厅");
         _logger.info("【验票大厅】验证通票{}是否有效",ticket);
         SessionBean sessionBean = (SessionBean) springRedisTemplateCache.getCache(CommonConstant.TICKET_CACHE_KEY+ticket,SessionBean.class);
         if(null!=sessionBean){
@@ -40,6 +36,7 @@ public class TicketController extends BaseController {
             return success(sessionBean);
         }else{
             return failure();
-        }
+        }*/
+       return null ;
     }
 }

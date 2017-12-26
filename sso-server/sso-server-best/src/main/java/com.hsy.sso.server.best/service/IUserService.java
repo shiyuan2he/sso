@@ -1,6 +1,7 @@
 package com.hsy.sso.server.best.service;
 
 import com.hsy.java.bean.vo.SessionBean;
+import com.hsy.java.bean.vo.UserInfoBean;
 
 /**
  * @author heshiyuan
@@ -21,7 +22,7 @@ public interface IUserService {
      * @author heshiyuan
      * @date 20/10/2017 1:19 PM
      */
-    SessionBean login(Long mobile, String password);
+    SessionBean login(Long id, Long mobile, String username, String password);
     /**
      * @description <p>注册</p>
      * @param mobile 手机号
