@@ -22,7 +22,7 @@ public interface IUserService {
      * @author heshiyuan
      * @date 20/10/2017 1:19 PM
      */
-    SessionBean login(Long id, Long mobile, String username, String password);
+    SessionBean login(Long mobile, String username, String password);
     /**
      * @description <p>注册</p>
      * @param mobile 手机号

@@ -15,11 +15,6 @@ import org.springframework.web.client.RestTemplate;
  * Copyright (c) 2017 shiyuan4work@sina.com All rights reserved.
  * @price ¥5    微信：hewei1109
  */
-@Configuration
+//@Configuration
 public class SsoConfig {
-    @Bean
-    @LoadBalanced
-    RestTemplate restTemplate(){
-        return new RestTemplate();
-    }
 }

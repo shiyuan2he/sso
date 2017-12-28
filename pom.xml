@@ -43,6 +43,7 @@
         <version.zkClient>0.8</version.zkClient>
         <version.kaptcha>2.3.2</version.kaptcha>
         <logback.version>1.2.3</logback.version>
+        <version.swagger2>2.7.0</version.swagger2>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -203,6 +204,16 @@
                 <version>${logback.version}</version>
             </dependency>
             <!-- logback + slf4j end -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${version.swagger2}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${version.swagger2}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <profiles>

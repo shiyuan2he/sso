@@ -6,8 +6,13 @@ import com.hsy.java.bean.web.BaseController;
 import com.hsy.java.enums.CacheEnum;
 import com.hsy.java.enums.SsoEnum;
 import com.hsy.java.java.base.string.StringHelper;
-import com.hsy.sso.server.best.dao.RestfulInterfaceInvoke;
+import com.hsy.sso.server.best.dao.CrmInterfaceInvoke;
+import com.hsy.sso.server.best.dao.RedisInterfaceInvoke;
 import com.hsy.sso.server.best.service.IUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,35 +32,45 @@ import javax.servlet.http.HttpServletResponse;
  * Copyright (c) 2017 shiyuan4work@sina.com All rights reserved.
  * @price ¥5    微信：hewei1109
  */
+@Api(value = "sso登陆接口",description = "sso登陆，注册，退出等服务")
 @RestController
-@RequestMapping("/api/sso/login")
-public class LoginController extends BaseController {
+@RequestMapping("/api/rest/sso")
+public class SsoController extends BaseController {
     private Logger _logger = LoggerFactory.getLogger(this.getClass()) ;
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     IUserService userService ;
-    //@Autowired
-    //SpringDataRedisDao springDataRedisDao ;
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
-    RestfulInterfaceInvoke restfulInterfaceInvoke ;
+    CrmInterfaceInvoke crmInterfaceInvoke ;
+    @Autowired
+    RedisInterfaceInvoke redisInterfaceInvoke ;
+
+    @ApiOperation(value = "登陆",notes = "sso登陆服务")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "mobile", value = "用户手机号", dataType = "Long"),
+        @ApiImplicitParam(name = "userName", value = "用户名称", dataType = "String"),
+        @ApiImplicitParam(name = "password", value = "用户密码", dataType = "String"),
+        @ApiImplicitParam(name = "imageCode", value = "图形验证码", required = true, dataType = "String")
+    })
     @RequestMapping(value = "/v1/login",method = RequestMethod.GET)
     @ResponseBody
     public ResponseBodyBean<Object> login(@RequestParam(value = "mobile") long mobile,
+                                          @RequestParam(value = "userName") String userName,
                                           @RequestParam(value = "password") String password,
-                                          @RequestParam(value = "codeImage") String codeImage,
+                                          @RequestParam(value = "imageCode") String imageCode,
                                           HttpServletRequest request,
                                           HttpServletResponse response) {
         _logger.info("【sso登陆-购票大厅】进入sso购票大厅。。。");
 
-        codeImage = codeImage.toUpperCase() ;
-        //String redisImageCode = (String) springDataRedisDao.getCache(CacheEnum.CACHE_KEY_IMAGE_CODE.getCode()+codeImage,String.class);
-        ResponseBodyBean<Object> data = restfulInterfaceInvoke.getStringValue(CacheEnum.CACHE_KEY_IMAGE_CODE.getCode()+codeImage);
+        imageCode = imageCode.toUpperCase() ;
+        ResponseBodyBean<Object> data = redisInterfaceInvoke.getStringValue(CacheEnum.CACHE_KEY_IMAGE_CODE.getCode() + imageCode);
         String redisImageCode = (String) data.getData() ;
         if(StringHelper.isNullOrEmpty(redisImageCode)){
             return failure("SSO9999","验证码不正确,或者超时60秒");
         }
 
-        SessionBean sessionBean = userService.login(0l,mobile, "",password) ;
+        SessionBean sessionBean = userService.login(mobile, userName,password) ;
         //将用户信息放进session中,暂无用处
         request.getSession().setAttribute(SsoEnum.SSO_KEY_USER_SESSION.getCode(),sessionBean);
 

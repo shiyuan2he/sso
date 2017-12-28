@@ -6,8 +6,8 @@ import com.hsy.java.enums.BusinessEnum;
 import com.hsy.java.enums.CacheEnum;
 import com.hsy.java.exception.service.BusinessException;
 import com.hsy.java.java.base.string.StringHelper;
-import com.hsy.sso.server.best.dao.RestfulInterfaceInvoke;
-import com.hsy.sso.server.best.dao.impl.SpringDataRedisDao;
+import com.hsy.sso.server.best.dao.CrmInterfaceInvoke;
+import com.hsy.sso.server.best.dao.RedisInterfaceInvoke;
 import com.hsy.sso.server.best.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +29,17 @@ import java.util.UUID;
 public class UserServiceImpl implements IUserService {
     private Logger _logger = LoggerFactory.getLogger(this.getClass());
 
-    //@Autowire
-    // SpringDataRedisDao springDataRedisDao ;
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
-    RestfulInterfaceInvoke restfulInterfaceInvoke ;
+    CrmInterfaceInvoke crmInterfaceInvoke ;
+    @Autowired
+    RedisInterfaceInvoke redisInterfaceInvoke ;
 
     @Override
-    public SessionBean login(Long id,Long mobile,String username,String password){
+    public SessionBean login(Long mobile,String username,String password){
         String ticket = "";
         try{
-            ResponseBodyBean<UserInfoBean> userInfoDto = restfulInterfaceInvoke.queryUserInfo(id,mobile,username,password) ;
+            ResponseBodyBean<UserInfoBean> userInfoDto = crmInterfaceInvoke.queryUserInfo(null,mobile,username,password) ;
             if(!userInfoDto.isSuccess()){
                 return null ;
             }
@@ -46,8 +47,7 @@ public class UserServiceImpl implements IUserService {
             // 生成一张同一时空下唯一通票，并将这张票保存在缓存当中
             ticket = UUID.randomUUID().toString() ;
             _logger.info("【sso登陆-购票大厅】{}购票成功,通票是{}",mobile,ticket);
-            //springDataRedisDao.putCacheWithExpireTime(CacheEnum.CACHE_KEY_TICKET.getCode() + mobile,ticket,60l);
-            restfulInterfaceInvoke.setStringValue(CacheEnum.CACHE_KEY_TICKET.getCode() + mobile,ticket);
+            redisInterfaceInvoke.setStringValue(CacheEnum.CACHE_KEY_TICKET.getCode() + mobile,ticket);
             _logger.info("【sso登陆-购票大厅】将key={},value={}存在缓存当中",CacheEnum.CACHE_KEY_TICKET.getCode() + mobile,ticket);
             SessionBean sessionBean = new SessionBean() ;
             sessionBean.setMobile(mobile);

@@ -3,7 +3,7 @@ package com.hsy.sso.server.best.dao.impl;
 import com.hsy.java.bean.dto.ResponseBodyBean;
 import com.hsy.java.bean.vo.UserInfoBean;
 import com.hsy.java.enums.SsoEnum;
-import com.hsy.sso.server.best.dao.RestfulInterfaceInvoke;
+import com.hsy.sso.server.best.dao.CrmInterfaceInvoke;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,21 +17,11 @@ import org.springframework.stereotype.Component;
  * @price ¥5    微信：hewei1109
  */
 @Component
-public class RestfulInterfaceImplFallback implements RestfulInterfaceInvoke {
+public class CrmInterfaceImplFallback implements CrmInterfaceInvoke {
     @Override
     public ResponseBodyBean<UserInfoBean> queryUserInfo(Long id,Long mobile,String username,String password) {
         return new ResponseBodyBean<>(false,
                 SsoEnum.SSO_EXCEPTION_QUERY_USERINFO.getCode(),
                 SsoEnum.SSO_EXCEPTION_QUERY_USERINFO.getMessage());
-    }
-
-    @Override
-    public ResponseBodyBean<Boolean> setStringValue(String key, String value) {
-        return null;
-    }
-
-    @Override
-    public ResponseBodyBean<Object> getStringValue(String key) {
-        return null;
     }
 }
