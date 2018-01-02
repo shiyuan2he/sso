@@ -114,22 +114,4 @@ public class SsoController extends BaseController {
         userService.logout(ticket);
         return success() ;
     }
-
-    @RequestMapping(value = "/v1/reg",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
-    public ResponseBodyBean<Object> reg(@RequestParam(value = "userName",required = false) String userName,
-                                        @RequestParam(value = "mobile") long mobile,
-                                        @RequestParam(value = "password",required = false) String password,
-                                        @RequestParam(value = "sex",required = false) Short sex,
-                                        @RequestParam(value = "email",required = false) String email,
-                                        @RequestParam(value = "remark",required = false) String remark,
-                                        @RequestParam(value = "userId") Long userId){
-
-        //ParamValidation.notNullValid(mobile); // 参数非空校验
-        if(userService.reg(userName,mobile,password,sex,email,remark,userId)){
-            return success() ;
-        }else{
-            return failure() ;
-        }
-    }
 }

@@ -21,12 +21,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "base-service-redis")
 public interface RedisInterfaceInvoke {
 
-    @PostMapping("/api/rest/redis/v1/set")
+    @PostMapping("/api/rest/redis/string/v1/set")
     ResponseBodyBean<Boolean> setStringValue(
             @RequestParam(value = "key") String key,
-            @RequestParam(value = "value") String value);
+            @RequestParam(value = "value") String value,
+            @RequestParam(value = "expire") Long expire
+    );
 
-    @GetMapping("/api/rest/redis/v1/get")
-    ResponseBodyBean<Object> getStringValue(
-            @RequestParam(value = "key") String key);
+    @GetMapping("/api/rest/redis/string/v1/get")
+    ResponseBodyBean<Object> getStringValue(@RequestParam(value = "key") String key);
+
+    @GetMapping("/api/rest/redis/v1/delete")
+    ResponseBodyBean<Object> delete(@RequestParam(value = "key") String key);
 }

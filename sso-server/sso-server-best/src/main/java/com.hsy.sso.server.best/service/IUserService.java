@@ -23,15 +23,7 @@ public interface IUserService {
      * @date 20/10/2017 1:19 PM
      */
     SessionBean login(Long mobile, String username, String password);
-    /**
-     * @description <p>注册</p>
-     * @param mobile 手机号
-     * @param password 用户密码
-     * @return 是否注册成功
-     * @author heshiyuan
-     * @date 2017/10/27 09:49
-     */
-    boolean reg(String userName,Long mobile, String password,Short sex,String email,String remark,Long userId) ;
+
     /**
      * @description <p>退出</p>
      * @param

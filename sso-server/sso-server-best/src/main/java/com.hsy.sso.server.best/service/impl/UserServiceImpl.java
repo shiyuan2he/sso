@@ -47,8 +47,15 @@ public class UserServiceImpl implements IUserService {
             // 生成一张同一时空下唯一通票，并将这张票保存在缓存当中
             ticket = UUID.randomUUID().toString() ;
             _logger.info("【sso登陆-购票大厅】{}购票成功,通票是{}",mobile,ticket);
-            redisInterfaceInvoke.setStringValue(CacheEnum.CACHE_KEY_TICKET.getCode() + mobile,ticket);
-            _logger.info("【sso登陆-购票大厅】将key={},value={}存在缓存当中",CacheEnum.CACHE_KEY_TICKET.getCode() + mobile,ticket);
+            redisInterfaceInvoke.setStringValue(
+                    CacheEnum.CACHE_KEY_TICKET.getCode() + ticket,
+                    String.valueOf(mobile),
+                    CacheEnum.CACHE_KEY_TICKET.getExpire());
+
+            _logger.info("【sso登陆-购票大厅】将key={},value={},expire={}存在缓存当中",
+                    CacheEnum.CACHE_KEY_TICKET.getCode() + ticket,
+                    mobile,CacheEnum.CACHE_KEY_TICKET.getExpire());
+
             SessionBean sessionBean = new SessionBean() ;
             sessionBean.setMobile(mobile);
             sessionBean.setTicket(ticket);
@@ -59,54 +66,16 @@ public class UserServiceImpl implements IUserService {
         }catch(Exception e){
             // 登陆失败，清除此人票务信息
             if(null!=ticket&&!"".equals(ticket)){
-                //springDataRedisDao.deleteCacheByKey(CacheEnum.CACHE_KEY_TICKET.getCode() + mobile);
+                redisInterfaceInvoke.delete(CacheEnum.CACHE_KEY_TICKET.getCode() + ticket);
             }
             throw new BusinessException(BusinessEnum.LOGIN_EXCEPTION) ;
         }
     }
-    @Override
-    public boolean reg(String userName,Long mobile, String password,Short sex,String email,String remark,Long userId) {
-        /*TSsoUser ssoUser = new TSsoUser() ;
-        String id = StringHelper.generateRandomOfStringByLength(19) ;
-        ssoUser.setId(Long.parseLong(id));
-        ssoUser.setMobile(mobile);
-        if (StringHelper.isNullOrEmpty(password)){
-            ssoUser.setPassword(Base64Helper.stringToBase64OfCc("123"));
-        }else{
-            ssoUser.setPassword(Base64Helper.stringToBase64OfCc(password));
-        }
-        ssoUser.setPasswordEncryptionType(ConstantEnum.ENCRYPTION_TYPE_BASE64.getCode());
-        if (StringHelper.isNullOrEmpty(userName)){
-            ssoUser.setUserName("sso"+System.currentTimeMillis());
-        }else{
-            ssoUser.setUserName(userName);
-        }
-        if(null == userId){
-            ssoUser.setCreater(Long.parseLong(id));
-        }else{
-            ssoUser.setCreater(userId);
-        }
-        if(StringHelper.isNotNullOrEmpty(email)){
-            ssoUser.setEmail(email);
-        }
-        if(null!=sex){
-            ssoUser.setSex(sex);
-        }
-        if(StringHelper.isNotNullOrEmpty(remark)){
-            ssoUser.setRemark(remark);
-        }
-        ssoUser.setCreateTime(Calendar.getInstance().getTime());
-        ssoUser.setIsDel((short)0);
-        if(itSsoUserMapper.insertUser(ssoUser)==1){
-            return true ;
-        }*/
-        return false;
-    }
 
     @Override
-    public boolean logout(String mobile) {
-        if(StringHelper.isNotNullOrEmpty(mobile)){
-           // springDataRedisDao.deleteCacheByKey(CacheEnum.CACHE_KEY_TICKET.getCode() + mobile);
+    public boolean logout(String ticket) {
+        if(StringHelper.isNotNullOrEmpty(ticket)){
+            redisInterfaceInvoke.delete(CacheEnum.CACHE_KEY_TICKET.getCode() + ticket);
             return true ;
         }
         return false;
