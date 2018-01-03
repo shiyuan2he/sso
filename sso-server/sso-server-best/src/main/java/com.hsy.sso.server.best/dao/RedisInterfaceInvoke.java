@@ -29,7 +29,7 @@ public interface RedisInterfaceInvoke {
     );
 
     @GetMapping("/api/rest/redis/string/v1/get")
-    ResponseBodyBean<Object> getStringValue(@RequestParam(value = "key") String key);
+    ResponseBodyBean<String> getStringValue(@RequestParam(value = "key") String key);
 
     @GetMapping("/api/rest/redis/v1/delete")
     ResponseBodyBean<Object> delete(@RequestParam(value = "key") String key);

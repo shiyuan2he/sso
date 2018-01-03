@@ -215,6 +215,11 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${version.swagger2}</version>
             </dependency>
+            <dependency>
+                <groupId>com.hsy.java</groupId>
+                <artifactId>java-resource</artifactId>
+                <version>${version.hsy.java}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <profiles>

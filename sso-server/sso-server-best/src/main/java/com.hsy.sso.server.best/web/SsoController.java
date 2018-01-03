@@ -4,6 +4,7 @@ import com.hsy.java.bean.dto.ResponseBodyBean;
 import com.hsy.java.bean.vo.SessionBean;
 import com.hsy.java.bean.web.BaseController;
 import com.hsy.java.enums.CacheEnum;
+import com.hsy.java.enums.CookieEnum;
 import com.hsy.java.enums.SsoEnum;
 import com.hsy.java.java.base.string.StringHelper;
 import com.hsy.sso.server.best.dao.CrmInterfaceInvoke;
@@ -55,34 +56,34 @@ public class SsoController extends BaseController {
     })
     @RequestMapping(value = "/v1/login",method = RequestMethod.GET)
     @ResponseBody
-    public ResponseBodyBean<Object> login(@RequestParam(value = "mobile") long mobile,
-                                          @RequestParam(value = "userName") String userName,
-                                          @RequestParam(value = "password") String password,
+    public ResponseBodyBean<Object> login(@RequestParam(value = "mobile",required = false) long mobile,
+                                          @RequestParam(value = "userName",required = false) String userName,
+                                          @RequestParam(value = "password",required = false) String password,
                                           @RequestParam(value = "imageCode") String imageCode,
-                                          HttpServletRequest request,
                                           HttpServletResponse response) {
         _logger.info("【sso登陆-购票大厅】进入sso购票大厅。。。");
 
+        // 1.校验图形验证码
         imageCode = imageCode.toUpperCase() ;
-        ResponseBodyBean<Object> data = redisInterfaceInvoke.getStringValue(CacheEnum.CACHE_KEY_IMAGE_CODE.getCode() + imageCode);
-        String redisImageCode = (String) data.getData() ;
+        ResponseBodyBean<String> data = redisInterfaceInvoke.getStringValue(CacheEnum.CACHE_KEY_IMAGE_CODE.getCode() + imageCode);
+        String redisImageCode = data.getData() ;
         if(StringHelper.isNullOrEmpty(redisImageCode)){
             return failure("SSO9999","验证码不正确,或者超时60秒");
         }
 
+        // 2.登陆
         SessionBean sessionBean = userService.login(mobile, userName,password) ;
-        //将用户信息放进session中,暂无用处
-        request.getSession().setAttribute(SsoEnum.SSO_KEY_USER_SESSION.getCode(),sessionBean);
 
+        // 3.写入cookie
         if (null != sessionBean) {
-            _logger.info("【sso登陆-购票大厅】{}登陆成功，满足购票条件", mobile);
+            _logger.info("【sso登陆-购票大厅】{}登陆成功", mobile);
             // 将通票放到顶层域中
             Cookie cookie = new Cookie(SsoEnum.SSO_KEY_TICKET_COOKIE.getCode(), sessionBean.getTicket());
-            cookie.setPath("/");
-            cookie.setMaxAge(120); // 两分钟
+            cookie.setPath(CookieEnum.COOKIE_INFO.getPath());
+            cookie.setMaxAge(CookieEnum.COOKIE_INFO.getExpire()); // 两分钟
             response.addCookie(cookie);
 
-            _logger.info("【sso登陆-购票大厅】方式登陆，购票成功");
+            _logger.info("【sso登陆-购票大厅】购票成功");
             return success();
         } else {
             _logger.info("【sso登陆-购票大厅】登陆失败，请重新登陆");
@@ -100,7 +101,7 @@ public class SsoController extends BaseController {
                 ticket = cookie.getValue() ;
                 // 删除cookie
                 cookie = new Cookie(SsoEnum.SSO_KEY_TICKET_COOKIE.getCode(),null);
-                cookie.setPath("/");
+                cookie.setPath(CookieEnum.COOKIE_INFO.getPath());
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }
