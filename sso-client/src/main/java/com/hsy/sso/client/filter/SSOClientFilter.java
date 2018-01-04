@@ -1,11 +1,9 @@
 package com.hsy.sso.client.filter;
 
-import com.hsy.java.bean.dto.ResponseBodyBean;
 import com.hsy.java.bean.vo.SessionBean;
 import com.hsy.java.enums.SsoEnum;
 import com.hsy.java.httpclient.utils.HttpClientUtils;
 import com.hsy.java.java.base.string.StringHelper;
-import com.hsy.java.util.json.JsonHelper;
 import com.hsy.java.util.json.JsonToBeanUtil;
 import com.hsy.sso.client.config.SsoClientConfig;
 import org.slf4j.Logger;
@@ -92,14 +90,14 @@ public class SSOClientFilter implements Filter {
                             filterChain.doFilter(request, response);
                         }else{
                             // 服务端验证未登录
-                            request.getRequestDispatcher("/WEB-INF/jsp/sso/login.jsp").forward(request,response);
+                            request.getRequestDispatcher("/login/login.jsp").forward(request,response);
                         }
                     }catch (Exception e){
                         _logger.error(e.getMessage(),e);
                     }
                 }else{
                     // 未登录，无授权令牌==》重新登陆
-                    request.getRequestDispatcher("/WEB-INF/jsp/sso/login.jsp").forward(request,response);
+                    request.getRequestDispatcher("/login/login.jsp").forward(request,response);
                 }
             }else{
                 filterChain.doFilter(request,response);
