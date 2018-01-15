@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 @Api(value = "sso校验服务",description = "提供校验授权令牌，通票，登陆状态等接口")
 @RestController
-@RequestMapping("/apr/rest/sso/auth")
+@RequestMapping("/api/rest/sso/auth")
 public class AuthController extends BaseController {
 
     private Logger _logger = LoggerFactory.getLogger(this.getClass()) ;

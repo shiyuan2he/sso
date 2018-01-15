@@ -5,7 +5,6 @@
     <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} -%5p ${PID:-} [%15.15t] %-40.40logger{39} : %m%n" />
     <property name="charsetEncoding" value="UTF-8" />
     <property name="logHome" value="./logs/sso" />
-    <!--<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>-->
 
     <!--控制台日志-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -31,7 +30,7 @@
         <File>${logHome}/info.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <FileNamePattern>./logs/api-gateway/info.%d{yyyy-MM-dd_HH}.log</FileNamePattern>
+            <FileNamePattern>${logHome}/info.%d{yyyy-MM-dd_HH}.log</FileNamePattern>
             <!-- keep 30 days' worth of history -->
             <maxHistory>3</maxHistory>
         </rollingPolicy>
