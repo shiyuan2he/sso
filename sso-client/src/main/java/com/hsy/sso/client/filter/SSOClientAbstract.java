@@ -26,13 +26,8 @@ import java.io.IOException;
  * Copyright (c) 2017 shiyuan4work@sina.com All rights reserved.
  * @price ¥5    微信：hewei1109
  */
-@WebFilter(urlPatterns = "/*",description = "sso客户端拦截器")
-public class SSOClientFilter implements Filter {
-    private static final Logger _logger = LoggerFactory.getLogger(SSOClientFilter.class);
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
+public abstract class SSOClientAbstract{
+    private static final Logger _logger = LoggerFactory.getLogger(SSOClientAbstract.class);
     /**
      * @description <p>
      *     1、静态资源文件放行
@@ -41,7 +36,6 @@ public class SSOClientFilter implements Filter {
      *     4、用验证通票跟此人匹配关系
      * </p>
      */
-    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
          _logger.info("【检票处】进入到sso-client系统拦截器");
@@ -90,23 +84,25 @@ public class SSOClientFilter implements Filter {
                             filterChain.doFilter(request, response);
                         }else{
                             // 服务端验证未登录
-                            request.getRequestDispatcher("/login/login.jsp").forward(request,response);
+                            request.getRequestDispatcher(getLoginPageUrl()).forward(request,response);
                         }
                     }catch (Exception e){
                         _logger.error(e.getMessage(),e);
                     }
                 }else{
                     // 未登录，无授权令牌==》重新登陆
-                    request.getRequestDispatcher("/login/login.jsp").forward(request,response);
+                    request.getRequestDispatcher(getLoginPageUrl()).forward(request,response);
                 }
             }else{
                 filterChain.doFilter(request,response);
             }
         }
     }
-
-    @Override
-    public void destroy() {
-
-    }
+    /**
+     * @description <p>设置登陆页面</p>
+     * @return 登陆页面
+     * @author heshiyuan
+     * @date 2018/1/16 17:39
+     */
+    public abstract String getLoginPageUrl() ;
 }
