@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sso-server-best</artifactId>
-    <packaging>war</packaging>
 
     <properties>
         <version.springcloud>Edgware.RELEASE</version.springcloud>
@@ -37,16 +36,87 @@
             <artifactId>spring-cloud-starter-feign</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.hsy.java</groupId>
-            <artifactId>java-exception</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
             <groupId>com.hsy.java</groupId>
-            <artifactId>java-enum</artifactId>
+            <artifactId>java-exception</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>fastjson</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.hsy.java</groupId>
+                    <artifactId>java-bean</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.hsy.java</groupId>
+                    <artifactId>java-enum</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-webmvc</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.hsy.java</groupId>
             <artifactId>java-base</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.hsy.java</groupId>
+                    <artifactId>java-thread</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-beanutils</groupId>
+                    <artifactId>commons-beanutils</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>fastjson</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.dyuproject.protostuff</groupId>
+                    <artifactId>protostuff-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.dyuproject.protostuff</groupId>
+                    <artifactId>protostuff-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.dyuproject.protostuff</groupId>
+                    <artifactId>protostuff-runtime</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.velocity</groupId>
+                    <artifactId>velocity</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>co</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -58,8 +128,38 @@
         </dependency>
         <dependency>
             <groupId>com.hsy.java</groupId>
+            <artifactId>java-enum</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.hsy.java</groupId>
+            <artifactId>java-bean</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.hsy.java</groupId>
+                    <artifactId>java-enum</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.hsy.java</groupId>
             <artifactId>java-util</artifactId>
             <exclusions>
+                <exclusion>
+                    <groupId>net.sf.json-lib</groupId>
+                    <artifactId>json-lib</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.hsy.java</groupId>
+                    <artifactId>java-base</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.hsy.java</groupId>
+                    <artifactId>java-bean</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.hsy.java</groupId>
+                    <artifactId>java-exception</artifactId>
+                </exclusion>
                 <exclusion>
                     <groupId>org.mybatis</groupId>
                     <artifactId>mybatis</artifactId>

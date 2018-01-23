@@ -10,6 +10,7 @@ import com.hsy.java.util.json.JsonHelper;
 import com.hsy.sso.server.best.dao.CrmInterfaceInvoke;
 import com.hsy.sso.server.best.dao.RedisInterfaceInvoke;
 import com.hsy.sso.server.best.service.IUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,15 @@ public class UserServiceImpl implements IUserService {
     public SessionBean login(Long mobile,String username,String password){
         String ticket = "";
         try{
-            ResponseBodyBean<UserInfoBean> userInfoDto = crmInterfaceInvoke.queryUserInfo(null,mobile,null,password) ;
+            ResponseBodyBean<UserInfoBean> userInfoDto = null ;
+            if(null != mobile){
+                userInfoDto = crmInterfaceInvoke.queryUserInfo(null,mobile,null,null) ;
+            }else if(StringUtils.isNotBlank(username)&&StringUtils.isNotBlank(password)){
+                userInfoDto = crmInterfaceInvoke.queryUserInfo(null,null,username,password) ;
+            }
+
             if(!userInfoDto.isSuccess()){
-                return null ;
+                throw new BusinessException(BusinessEnum.QUERY_USER_INFO_FAILURE) ;
             }
             UserInfoBean userInfoBean = userInfoDto.getData() ;
             // 生成一张同一时空下唯一通票，并将这张票保存在缓存当中

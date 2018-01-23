@@ -7,6 +7,7 @@ import com.hsy.java.enums.CacheEnum;
 import com.hsy.java.enums.CookieEnum;
 import com.hsy.java.enums.SsoEnum;
 import com.hsy.java.java.base.string.StringHelper;
+import com.hsy.java.util.http.RequestHelper;
 import com.hsy.sso.server.best.dao.CrmInterfaceInvoke;
 import com.hsy.sso.server.best.dao.RedisInterfaceInvoke;
 import com.hsy.sso.server.best.service.IUserService;
@@ -60,6 +61,7 @@ public class SsoController extends BaseController {
                                           @RequestParam(value = "userName",required = false) String userName,
                                           @RequestParam(value = "password",required = false) String password,
                                           @RequestParam(value = "imageCode") String imageCode,
+                                          HttpServletRequest request,
                                           HttpServletResponse response) {
         _logger.info("【sso登陆-购票大厅】进入sso购票大厅。。。");
 
@@ -68,7 +70,7 @@ public class SsoController extends BaseController {
         ResponseBodyBean<String> data = redisInterfaceInvoke.getStringValue(CacheEnum.CACHE_KEY_IMAGE_CODE.getCode() + imageCode);
         String redisImageCode = data.getData() ;
         if(StringHelper.isNullOrEmpty(redisImageCode)){
-            return failure("SSO9999","验证码不正确,或者超时60秒");
+            return failure("SSO9999","验证码不正确,或者60秒超时");
         }
 
         // 2.登陆
@@ -79,8 +81,11 @@ public class SsoController extends BaseController {
             _logger.info("【sso登陆-购票大厅】{}登陆成功", mobile);
             // 将通票放到顶层域中
             Cookie cookie = new Cookie(SsoEnum.SSO_KEY_TICKET_COOKIE.getCode(), sessionBean.getTicket());
+            cookie.setDomain(RequestHelper.getDomainFromRequest(request)==null?".sso.com":RequestHelper.getDomainFromRequest(request));
             cookie.setPath(CookieEnum.COOKIE_INFO.getPath());
-            cookie.setMaxAge(CookieEnum.COOKIE_INFO.getExpire()); // 两分钟
+            cookie.setMaxAge(CookieEnum.COOKIE_INFO.getExpire());
+            cookie.setComment("登陆凭证");
+            cookie.setHttpOnly(true);
             response.addCookie(cookie);
 
             _logger.info("【sso登陆-购票大厅】购票成功");
@@ -102,6 +107,7 @@ public class SsoController extends BaseController {
                 // 删除cookie
                 cookie = new Cookie(SsoEnum.SSO_KEY_TICKET_COOKIE.getCode(),null);
                 cookie.setPath(CookieEnum.COOKIE_INFO.getPath());
+                cookie.setDomain("");
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }
